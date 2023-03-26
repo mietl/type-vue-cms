@@ -9,11 +9,11 @@ const routes:RouteRecordRaw[]= [
   },
   {
     path:'/login',
-    component:()=>import('@/views/login/login.vue')
+    component:()=>import('@/views/login/Login.vue')
   },
   {
     path:'/main',
-    component:()=>import('@/views/main/main.vue')
+    component:()=>import('@/views/home/HomePage.vue')
   }
 ];
 
