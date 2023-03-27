@@ -1,4 +1,4 @@
-import { BASE_URL,TIME_OUT } from "@/config";
+import { BASE_URL,TIME_OUT } from "@/config/env";
 
 import httpRequest from "./request";
 
@@ -11,10 +11,8 @@ export default new httpRequest({
       // if(token){
       //   config.headers.Authorization = `Bearer ${token}`;
       // }
-
       console.log('实例请求拦截成功');
       return config;
     }
-
   }
 })

@@ -1,9 +1,11 @@
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
 import type { AxiosInstance,AxiosRequestConfig,AxiosResponse} from 'axios'
 
 import { ElLoading } from 'element-plus'
 
+
+// InternalAxiosRequestConfig 是一个 TypeScript 接口，用于扩展 Axios 的 AxiosRequestConfig 接口，以添加自定义配置。您可以使用它来定义您需要的额外配置参数。
 interface InternalAxiosRequestConfig extends AxiosRequestConfig {
   interceptors?:IRequestInterceptors,
   showLoading?:boolean
@@ -72,8 +74,8 @@ class httpRequest {
   }
 
 
-  useInstanceInterceptors(){
-  }
+  // useInstanceInterceptors(){
+  // }
 
   constructor(config:InternalAxiosRequestConfig){
     this.instance = axios.create(config)
@@ -95,7 +97,7 @@ class httpRequest {
 
   }
 
-  request<T>(config:InternalAxiosRequestConfig):Promise<T>{
+  request<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
     return new Promise((resolve,reject)=>{
        // 某单个请求添加拦截器
       if (config.interceptors?.requestInterceptor) {
@@ -124,20 +126,20 @@ class httpRequest {
     })
   }
 
-  get<T>(config:InternalAxiosRequestConfig):Promise<T>{
+  get<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
     return this.request({...config,method:'GET'});
   }
 
-  post<T>(config:InternalAxiosRequestConfig):Promise<T>{
-    return this.request({ ...config,method:'POST'});
+  post<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
+    return this.request<T>({ ...config,method:'POST'});
   }
 
 
-  delete<T>(config:InternalAxiosRequestConfig):Promise<T>{
+  delete<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
     return this.request({...config,method:'DELETE'});
   }
 
-  patch<T>(config:InternalAxiosRequestConfig):Promise<T>{
+  patch<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
     return this.request({...config,method:'PATCH'});
   }
   

@@ -7,7 +7,7 @@
           type="text"
           id="username"
           name="username"
-          v-model="credentials.username"
+          v-model="account.name"
           placeholder="请输入用户名"
           pattern="^[a-z0-9]{6,20}$"
           title="用户名必须是6~20个字母或数字"
@@ -20,7 +20,7 @@
           type="password"
           id="password"
           name="password"
-          v-model="credentials.password"
+          v-model="account.password"
           placeholder="请输入密码"
           required
           pattern="^[a-z0-9]{3,}$"
@@ -43,6 +43,7 @@
 import { ref, reactive, watch } from 'vue'
 import { localCache } from '@/utils/storage'
 import useUserStore from '@/store/user'
+import type { IAccount } from '@/types'
 
 const userStore = useUserStore()
 
@@ -54,22 +55,21 @@ watch(rememberMe, (newValue) => {
   localCache.set('rememberMe', newValue)
 })
 
-const credentials = reactive({
-  username: localCache.get('name') ?? '',
+const account = reactive<IAccount>({
+  name: localCache.get('name') ?? '',
   password: localCache.get('password') ?? ''
 })
 
 function validateForm() {
   if (formRef.value?.checkValidity()) {
-    const name = credentials.username
-    const password = credentials.password
+    const name = account.name
+    const password = account.password
     // 1.登录操作
     userStore.loginAction({ name, password })
     // 2.记住密码
     if (rememberMe.value) {
       localCache.set('name', name)
       localCache.set('password', password)
-      console.log('存了')
     } else {
       localCache.remove('name')
       localCache.remove('password')
@@ -79,6 +79,7 @@ function validateForm() {
   }
 }
 
+// 向外暴露 validateForm 方法
 defineExpose({
   validateForm
 })
