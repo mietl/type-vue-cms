@@ -9,15 +9,19 @@ import { LOGIN_TOKEN } from '@/config/constant';
 const routes:RouteRecordRaw[]= [
   {
     path:'/',
-    redirect:'/main'
+    redirect:'/home'
   },
   {
-    path:'/login',
+    path:'/login', 
     component:()=>import('@/views/login/Login.vue')
   },
   {
     path:'/home',
     component:()=>import('@/views/home/HomePage.vue')
+  },
+  {
+    path:'/:patchMatch(.*)',
+    component:()=>import('@/views/NotFoundPage.vue')
   }
 ];
 
