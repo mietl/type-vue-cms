@@ -1,35 +1,35 @@
 import axios from 'axios';
 
-import type { AxiosInstance,AxiosRequestConfig,AxiosResponse} from 'axios'
+import type { AxiosInstance,InternalAxiosRequestConfig,AxiosResponse,AxiosRequestConfig} from 'axios'
 
 import { ElLoading } from 'element-plus'
 
 
+
 // InternalAxiosRequestConfig 是一个 TypeScript 接口，用于扩展 Axios 的 AxiosRequestConfig 接口，以添加自定义配置。您可以使用它来定义您需要的额外配置参数。
-interface InternalAxiosRequestConfig extends AxiosRequestConfig {
+interface IRequestInterConfig extends AxiosRequestConfig{
   interceptors?:IRequestInterceptors,
-  showLoading?:boolean
+  showLoading?:boolean,
 }
 
 
 interface IRequestInterceptors {
-  requestInterceptor?: <T = InternalAxiosRequestConfig>(config: T) => T
+  requestInterceptor?: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig
   requestInterceptorRejected?: (error: any) => any;
   responseInterceptor?: <T = AxiosResponse> (res:T) => T
   responseInterceptorRejected?: (error: any) => any;
 }
 
 
-const defaultLoading = true;
+const SETUP_LOADING = true;
 
 class httpRequest {
   instance:AxiosInstance
-  interceptors?:IRequestInterceptors
   showLoading?:boolean
   loading?:any
 
   // 添加全局拦截器
-  useStaticInterceptors(){
+  setupInterceptors(){
     // 添加全局请求拦截
     this.instance.interceptors.request.use(
       config=>{
@@ -73,35 +73,30 @@ class httpRequest {
     )
   }
 
-
-  // useInstanceInterceptors(){
-  // }
-
-  constructor(config:InternalAxiosRequestConfig){
+  constructor(config:IRequestInterConfig){
     this.instance = axios.create(config)
 
-    this.interceptors = config.interceptors
-    this.showLoading = config.showLoading || defaultLoading;
+    this.showLoading = config.showLoading || SETUP_LOADING;
 
-    this.useStaticInterceptors();
+    this.setupInterceptors();
 
+    // 实例的拦截器
     this.instance.interceptors.request.use(
-        this.interceptors?.requestInterceptor,
-        this.interceptors?.requestInterceptorRejected
+      config.interceptors?.requestInterceptor,
+      config.interceptors?.requestInterceptorRejected
     )
 
     this.instance.interceptors.response.use(
-      this.interceptors?.responseInterceptor,
-      this.interceptors?.responseInterceptorRejected
+      config.interceptors?.responseInterceptor,
+      config.interceptors?.responseInterceptorRejected
     )
-
   }
 
-  request<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
+  request<T = any>(config:IRequestInterConfig):Promise<T>{
     return new Promise((resolve,reject)=>{
        // 某单个请求添加拦截器
       if (config.interceptors?.requestInterceptor) {
-        config = config.interceptors.requestInterceptor(config)
+        config = config.interceptors.requestInterceptor(config as InternalAxiosRequestConfig)
       }
 
       // 判断是否需要显示loading
@@ -120,27 +115,27 @@ class httpRequest {
       .catch(reject)
       .finally(()=>{
         // 请求完成后，恢复全局是否显示loading状态
-        this.showLoading = defaultLoading;
+        this.showLoading = SETUP_LOADING;
       })
 
     })
   }
 
-  get<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
-    return this.request({...config,method:'GET'});
+  get<T = any>(url: string, config?: IRequestInterConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET', url });
   }
 
-  post<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
-    return this.request<T>({ ...config,method:'POST'});
+  post<T = any>(url: string, config?: IRequestInterConfig):Promise<T>{
+    return this.request<T>({ ...config,method:'POST',url});
   }
 
 
-  delete<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
-    return this.request({...config,method:'DELETE'});
+  delete<T = any>(url: string, config?: IRequestInterConfig):Promise<T>{
+    return this.request({...config,method:'DELETE',url});
   }
 
-  patch<T = any>(config:InternalAxiosRequestConfig):Promise<T>{
-    return this.request({...config,method:'PATCH'});
+  patch<T = any>(url: string, config?: IRequestInterConfig):Promise<T>{
+    return this.request({...config,method:'PATCH',url});
   }
   
 }
