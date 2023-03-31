@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <el-container class="main-wrapper">
-      <el-aside width="200px">
-        <nav-menu />
+      <el-aside :width="isCollapse ? '60px' : '200px'">
+        <nav-menu :isCollapse="isCollapse" />
       </el-aside>
       <el-container>
         <!-- Header  -->
         <el-header height="50px">
-          <nav-header />
+          <nav-header @changeCollapse="setCollapse" />
         </el-header>
         <el-main>Main</el-main>
       </el-container>
@@ -16,7 +16,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import NavHeader from '@/components/nav-header/NavHeader.vue'
+
+const isCollapse = ref(false)
+const setCollapse = (flag: boolean) => {
+  isCollapse.value = flag
+}
 </script>
 
 <style lang="less" scoped>
@@ -31,7 +37,10 @@ import NavHeader from '@/components/nav-header/NavHeader.vue'
     // background-color: #001529;
     background-color: #2f549c;
     color: #fff;
+    text-align: left;
+    cursor: pointer;
 
+    transition: width 0.3s ease;
     &::-webkit-scrollbar {
       display: none;
     }

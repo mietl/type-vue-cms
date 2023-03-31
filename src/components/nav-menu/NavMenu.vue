@@ -1,15 +1,19 @@
 <template>
   <div class="nav-menu">
-    <div class="logo">
-      <img class="img" src="@/assets/img/logo.png" alt="" />
-      <h2 class="title">内容管理</h2>
+    <div class="header-bg">
+      <div class="logo">
+        <img class="img" src="@/assets/img/logo.png" alt="" />
+        <h2 class="title" v-show="!isCollapse">内容管理</h2>
+      </div>
     </div>
+
     <!-- :collapse="isCollapse"
       @open="handleOpen"
       @close="handleClose" -->
 
     <!-- b7bdc3 -->
     <el-menu
+      :collapse="isCollapse"
       default-active="2"
       background-color="#2f549c"
       text-color="#e1dfd9"
@@ -40,18 +44,45 @@ import useUserStore from '@/store/user'
 const userStore = useUserStore()
 
 const userMenus = userStore.userMenus
+
+defineProps({
+  isCollapse: {
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style lang="less" scoped>
 .nav-menu {
-  background-color: #fff;
+  // background-color: #FBA93D;
   // background: linear-gradient(to bottom, #fff, #2f549c);
-  border-right: none;
+  .el-menu {
+    border-right: none;
+  }
+}
+
+.header-bg {
+  background: url('@/assets/img/icon_1024x1024x32.png');
+  background-position: -65px -250px;
+  background-size: 500px;
+  animation: swing 1.5s linear infinite alternate;
+}
+
+@keyframes swing {
+  0% {
+    background-position: -65px -250px;
+  }
+
+  100% {
+    background-position: -65px -300px;
+  }
 }
 .logo {
   display: flex;
   align-items: start;
   height: 50px;
+  margin-left: -3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   // #c9c5c2
@@ -65,7 +96,7 @@ const userMenus = userStore.userMenus
   .title {
     font-size: 17px;
     font-weight: normal;
-    color: #303133 !important;
+    color: #fff !important;
   }
 }
 
@@ -89,9 +120,9 @@ const userMenus = userStore.userMenus
 }
 
 .el-menu-item.is-active {
-  // color: #303133 !important;
-  color: #333333;
-  // c9c5c2
-  background-color: #c9c5c2 !important;
+  color: #303133 !important;
+  // color: #fff;
+  // color: #333333;
+  background-color: #a4aec2 !important;
 }
 </style>

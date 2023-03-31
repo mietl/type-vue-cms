@@ -1,24 +1,22 @@
 <template>
   <div class="nav-header">
-    <el-icon size="25px" class="collapse-icon"><Expand /></el-icon>
-    <div class="header-bar">
+    <el-icon size="25px" class="collapse-icon" @click="handleCollapse"><Expand /></el-icon>
+    <div class="headman">
       <div class="breadcrumbs">面包屑</div>
-      <div class="profile">
-        用户信息
-        <el-button @click="logout">dropout</el-button>
-      </div>
+      <user-nav-toolbar></user-nav-toolbar>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LOGIN_TOKEN } from '@/config/constant'
-import router from '@/router'
-import { localCache } from '@/utils/storage'
+import { ref } from 'vue'
+import UserNavToolbar from './components/UserNavToolbar.vue'
 
-const logout = () => {
-  localCache.remove(LOGIN_TOKEN)
-  router.push('/login')
+let isCollapseState = ref(false)
+const emits = defineEmits(['changeCollapse'])
+const handleCollapse = () => {
+  isCollapseState.value = !isCollapseState.value
+  emits('changeCollapse', isCollapseState.value)
 }
 </script>
 
@@ -33,7 +31,7 @@ const logout = () => {
     align-items: center;
   }
 
-  .header-bar {
+  .headman {
     display: flex;
     flex: 1;
     justify-content: space-between;
