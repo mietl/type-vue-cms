@@ -19,9 +19,18 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
-          <el-dropdown-item divided>个人信息</el-dropdown-item>
-          <el-dropdown-item>修改密码</el-dropdown-item>
+          <el-dropdown-item @click="logout">
+            <ant-design-logout-outlined class="info-icon" />
+            退出登录
+          </el-dropdown-item>
+          <el-dropdown-item divided>
+            <ant-design-info-circle-twotone class="info-icon" />
+            个人信息
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <ant-design-unlock-outlined class="info-icon" />
+            修改密码
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -87,6 +96,11 @@ const logout = () => {
   align-items: center;
   cursor: pointer;
   outline: 0;
+
+  :global(.info-icon) {
+    font-size: 16px;
+    margin-right: 5px;
+  }
 
   .name {
     margin-left: 5px;

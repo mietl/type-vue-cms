@@ -1,6 +1,11 @@
 <template>
   <div class="nav-header">
-    <el-icon size="25px" class="collapse-icon" @click="handleCollapse"><Expand /></el-icon>
+    <!-- line-md:menu-unfold-left -->
+    <div @click="handleCollapse" class="collapse-icon">
+      <line-md-menu-unfold-left v-show="!isCollapseState" :style="{ fontSize: '20px' }" />
+      <line-md-menu-unfold-right v-show="isCollapseState" :style="{ fontSize: '20px' }" />
+    </div>
+
     <div class="headman">
       <div class="breadcrumbs">面包屑</div>
       <user-nav-toolbar></user-nav-toolbar>

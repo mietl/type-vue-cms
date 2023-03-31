@@ -10,7 +10,6 @@
     <!-- :collapse="isCollapse"
       @open="handleOpen"
       @close="handleClose" -->
-
     <!-- b7bdc3 -->
     <el-menu
       :collapse="isCollapse"
@@ -21,16 +20,18 @@
       class="el-menu-vertical"
     >
       <template v-for="subMenuItem in userMenus" :key="subMenuItem.id">
-        <el-sub-menu :index="subMenuItem.id">
+        <el-sub-menu :index="String(subMenuItem.id)">
           <template #title>
+            <!-- <icon :name="'ep' + subMenuItem.icon.split('icon')[1]" /> -->
             <el-icon>
-              <component :is="subMenuItem.icon.split('icon')[1]"></component>
+              <component :is="'ep' + subMenuItem.icon.split('icon')[1]"></component>
             </el-icon>
+            <!-- <span class="iconify" data-icon="ep:home"></span> -->
             <span>{{ subMenuItem.name }}</span>
           </template>
 
           <template v-for="menuItem in subMenuItem.children" :key="menuItem.id">
-            <el-menu-item :index="menuItem.id">{{ menuItem.name }}</el-menu-item>
+            <el-menu-item :index="String(menuItem.id)">{{ menuItem.name }}</el-menu-item>
           </template>
         </el-sub-menu>
       </template>
