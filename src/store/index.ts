@@ -8,4 +8,3 @@ const pinia = createPinia()
 pinia.use(swalPlugin);
 
 export default pinia;
-export default pinia;
