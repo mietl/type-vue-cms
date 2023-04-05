@@ -1,4 +1,4 @@
 export default {
-  path:'/analysis/overview',
+  path:'/main/analysis/overview',
   component:import('@/views/main/analysis/overview/Overview.vue')
 }
