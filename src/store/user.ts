@@ -51,10 +51,8 @@ const useUserStore = defineStore('user',{
         this.userMenus = userMenus;
         this.userInfo = userInfo;
 
-      
+        // 动态添加路由
         const children = menuMapRoutes(userMenus);
-
-        // 添加路由
         children.forEach(route=> router.addRoute('main',route))
 
         // 跳转首页
@@ -62,8 +60,17 @@ const useUserStore = defineStore('user',{
       } catch (error) {
         console.log(error);
       }
+    },
+    loadDynamicRoutes(){
+      if(this.token && this.userMenus){
+        console.log('刷新后执行吗');
+        // 动态添加路由
+        const children = menuMapRoutes(this.userMenus);
+        children.forEach(route=> router.addRoute('main',route))
+      }
     }
   }
 })
+
 
 export default useUserStore;

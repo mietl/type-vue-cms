@@ -13,7 +13,7 @@
     <!-- b7bdc3 -->
     <el-menu
       :collapse="isCollapse"
-      default-active="2"
+      :default-active="activeItem"
       background-color="#2f549c"
       text-color="#e1dfd9"
       active-text-color="#0a60bd"
@@ -29,7 +29,7 @@
           </template>
 
           <template v-for="menuItem in subMenuItem.children" :key="menuItem.id">
-            <el-menu-item :index="String(menuItem.id)" @click="changeChannel(menuItem.url)">{{
+            <el-menu-item :index="String(menuItem.id)" @click="changePage(menuItem.url)">{{
               menuItem.name
             }}</el-menu-item>
           </template>
@@ -42,9 +42,16 @@
 <script setup lang="ts">
 import router from '@/router'
 import useUserStore from '@/store/user'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+
 const userStore = useUserStore()
 
 const userMenus = userStore.userMenus
+
+const route = useRoute()
+const menuItemId = route.meta.id + ''
+const activeItem = ref(menuItemId)
 
 defineProps({
   isCollapse: {
@@ -53,8 +60,7 @@ defineProps({
   }
 })
 
-const changeChannel = (path: string) => {
-  console.log(path)
+const changePage = (path: string) => {
   router.push(path)
 }
 </script>

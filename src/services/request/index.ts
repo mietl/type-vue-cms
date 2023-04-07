@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import type { AxiosInstance,InternalAxiosRequestConfig,AxiosResponse,AxiosRequestConfig} from 'axios'
 
-import { ElLoading } from 'element-plus'
-
+// import { ElLoading } from 'element-plus'
+import Swal from 'sweetalert2'
 
 
 // InternalAxiosRequestConfig 是一个 TypeScript 接口，用于扩展 Axios 的 AxiosRequestConfig 接口，以添加自定义配置。您可以使用它来定义您需要的额外配置参数。
@@ -34,12 +34,21 @@ class httpRequest {
     this.instance.interceptors.request.use(
       config=>{
         if(this.showLoading){
-          this.loading = ElLoading.service({
-            lock: true,
-            text: '加载中...',
-            // spinner: 'custom-loading-spinner',
-            background: 'rgba(255, 255, 255, 0.7)',
-          })
+          // this.loading = ElLoading.service({
+          //   lock: true,
+          //   text: '加载中...',
+          //   background: 'rgba(255, 255, 255, 0.7)',
+          // })
+          if (!Swal.isVisible()) {
+            Swal.fire({
+              html: '正在加载，请稍候...',
+              allowOutsideClick: false,
+              showConfirmButton: false,
+              willOpen: () => {
+                Swal.showLoading()
+              }
+            })
+          }
         }
         console.log('全局请求成功拦截')
         return config;
@@ -55,12 +64,16 @@ class httpRequest {
     this.instance.interceptors.response.use(
       res=>{
         // console.log('全局响应成功拦截')
-        this.loading?.close();
+        // this.loading?.close();
+        // Swal.hideLoading()
+        Swal.close()
         return res.data;
       },
       err=>{
         // console.log('全局响应失败拦截')
-        this.loading?.close();
+        // this.loading?.close();
+      //  Swal.hideLoading()
+       Swal.close()
         // if (err.response.status === 404) {
           // 处理错误
         // }

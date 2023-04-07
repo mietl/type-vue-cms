@@ -9,20 +9,32 @@ function dirRoutes(){
     return routes;
 }
 
+
+export let firstMenuItem = null;
+
 export function menuMapRoutes(menus:any[]):RouteRecordRaw[]{
-  const children = [];
+  const matchedRoutes = [];
   
-  const routes = dirRoutes();
+  const allRoutes:any[] = dirRoutes();
   for(const menuItem  of menus){
     for(const submenu of menuItem.children){
-      console.log(submenu,submenu.url,routes[0].path,submenu.url.includes(routes[0].path));
-
-      const matchPath = routes.find(route=>submenu.url.includes(route.path));
-      if(matchPath){
-        children.push(matchPath);
+      console.log(allRoutes);
+      const matchedRoute = allRoutes.find(route=>{
+          if(submenu.url.includes(route.path)){
+            // 定义元数据
+            route.meta = {
+              id:submenu.id
+            }
+            return true;
+          }
+      });
+      if(matchedRoute){
+        matchedRoutes.push(matchedRoute);
+        // 赋值第一个菜单项
+        if(!firstMenuItem)  firstMenuItem = submenu;
       }
     }
   }
   
-  return children;
+  return matchedRoutes;
 }

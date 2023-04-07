@@ -46,6 +46,7 @@ import { localCache } from '@/utils/storage'
 
 const logout = () => {
   localCache.remove(LOGIN_TOKEN)
+  console.log('sdfsdf')
   router.push('/login')
 }
 </script>
