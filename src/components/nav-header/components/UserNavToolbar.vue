@@ -7,11 +7,10 @@
       </span>
       <span>
         <ant-design:github-filled></ant-design:github-filled>
-        <!-- <el-icon><Promotion /></el-icon> -->
       </span>
       <span>
+        <!-- <ep-milkTea></ep-milkTea> -->
         <ant-design-experiment-twotone></ant-design-experiment-twotone>
-        <!-- <el-icon><Male /></el-icon> -->
       </span>
     </div>
     <el-dropdown>
@@ -26,7 +25,7 @@
             个人信息
           </el-dropdown-item>
           <el-dropdown-item>
-            <ant-design-unlock-outlined class="info-icon" />
+            <ep-lock class="info-icon"></ep-lock>
             修改密码
           </el-dropdown-item>
           <el-dropdown-item @click="logout" divided>
@@ -46,7 +45,7 @@ import { localCache } from '@/utils/storage'
 
 const logout = () => {
   localCache.remove(LOGIN_TOKEN)
-  console.log('sdfsdf')
+  console.log('删除了没', localCache.get(LOGIN_TOKEN))
   router.push('/login')
 }
 </script>
@@ -107,12 +106,15 @@ const logout = () => {
 
   .name {
     margin-left: 5px;
+    font-family: 700;
+    font-size: 16px;
+    color: #303133;
   }
 }
 
 .info {
   :global(.el-dropdown-menu__item) {
-    padding: 6px 22px;
+    // padding: 6px 20px;
   }
 }
 </style>

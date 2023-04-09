@@ -3,10 +3,9 @@
     <div class="header-bg">
       <div class="logo">
         <img class="img" src="@/assets/img/logo.png" alt="" />
-        <h2 class="title" v-show="!isCollapse">内容管理</h2>
+        <div class="title" v-show="!isCollapse">内容管理</div>
       </div>
     </div>
-
     <!-- :collapse="isCollapse"
       @open="handleOpen"
       @close="handleClose" -->
@@ -42,7 +41,7 @@
 <script setup lang="ts">
 import router from '@/router'
 import useUserStore from '@/store/user'
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
@@ -50,8 +49,8 @@ const userStore = useUserStore()
 const userMenus = userStore.userMenus
 
 const route = useRoute()
-const menuItemId = route.meta.id + ''
-const activeItem = ref(menuItemId)
+
+const activeItem = computed(() => route.meta.id + '')
 
 defineProps({
   isCollapse: {
@@ -75,7 +74,7 @@ const changePage = (path: string) => {
 }
 
 .header-bg {
-  background: url('@/assets/img/icon_1024x1024x32.png');
+  background: url('@/assets/img/logobg.png');
   background-position: -65px -250px;
   background-size: 500px;
   animation: swing 1.5s linear infinite alternate;
@@ -92,7 +91,7 @@ const changePage = (path: string) => {
 }
 .logo {
   display: flex;
-  align-items: start;
+  align-items: center;
   height: 50px;
   margin-left: -3px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -102,13 +101,18 @@ const changePage = (path: string) => {
     height: 60px;
     transform: scale(1.5);
     margin-right: 10px;
-    margin-top: -3px;
+    margin-top: 5px;
   }
 
   .title {
-    font-size: 17px;
-    font-weight: normal;
-    color: #fff !important;
+    color: #e6f1ff;
+    border-radius: 20px;
+    padding: 10px 18px;
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+    background-color: rgba(255, 118, 30, 0.15);
   }
 }
 
@@ -132,9 +136,12 @@ const changePage = (path: string) => {
 }
 
 .el-menu-item.is-active {
-  color: #303133 !important;
+  // color: #303133 !important;
+  color: #eae9e0;
+  background: rgba(255, 255, 222, 0.4);
+  // color: #303133;
   // color: #fff;
   // color: #333333;
-  background-color: #a4aec2 !important;
+  // background-color: #a4aec2 !important;
 }
 </style>

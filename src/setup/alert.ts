@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
 import type { App } from 'vue'
@@ -15,13 +15,13 @@ const Toast = Swal.mixin({
   }
 })
 
+export { Swal as $swal, Toast as $swalToast }
 export const swalPlugin = () => ({
-  $swal:Swal,
-  $swalToast:Toast
-});
+  $swal: Swal,
+  $swalToast: Toast
+})
 
-
-export default function (app:App){
-  app.config.globalProperties.$swal = Swal;
-  app.config.globalProperties.$toast = Toast;
+export default function (app: App) {
+  app.config.globalProperties.$swal = Swal
+  app.config.globalProperties.$toast = Toast
 }
