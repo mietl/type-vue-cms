@@ -10,8 +10,6 @@
 
 <script setup lang="ts">
 import interest from '@/assets/img/1f535.png'
-
-// import MdiAlarm from ''
 </script>
 
 <style scoped>

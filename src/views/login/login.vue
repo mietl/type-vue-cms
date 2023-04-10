@@ -31,8 +31,6 @@ let loginAction = () => {
 </script>
 
 <style scoped>
-
-
 .login-container {
   font-family: 'Arial', sans-serif;
   background-color: #f2f3f5;
@@ -64,6 +62,11 @@ let loginAction = () => {
 .el-tabs {
   width: 233px;
 }
+/* 
+.el-tabs :v-deep(.el-tabs__item) {
+  --el-color-primary: red !important;
+  color: red !important;
+} */
 
 /* 提交按钮 */
 .submit-btn {

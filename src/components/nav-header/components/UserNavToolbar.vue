@@ -3,15 +3,12 @@
     <div class="toolbar">
       <span>
         <span class="dot"></span>
-        <el-icon><Message /></el-icon>
+        <ep-notification></ep-notification>
       </span>
       <span>
         <ant-design:github-filled></ant-design:github-filled>
       </span>
-      <span>
-        <!-- <ep-milkTea></ep-milkTea> -->
-        <ant-design-experiment-twotone></ant-design-experiment-twotone>
-      </span>
+      <span style="font-size: 23px"> 🍬 </span>
     </div>
     <el-dropdown>
       <span class="info">

@@ -8,7 +8,8 @@
       <label for="code">验证码</label>
       <div class="code-group">
         <input type="text" id="code" name="code" placeholder="请输入验证码" required />
-        <button class="code-btn">获取验证码</button>
+        <!-- <button class="code-btn">获取验证码</button> -->
+        <el-button color="#626aef" plain>获取验证码</el-button>
       </div>
     </div>
   </div>
@@ -38,18 +39,20 @@ export default defineComponent({
   flex: 1;
 }
 
-.code-btn {
+.el-button {
+  height: 34px;
+}
+
+/* .code-btn {
   padding: 0.5rem;
   border: 1px solid #738e97;
   border-radius: 5px;
-  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 0.9rem;
 }
 
 .code-btn:hover {
-  background-color: #939fa7;
-  color: #ffffff;
-}
+  background-color: #626aef;
+} */
 </style>

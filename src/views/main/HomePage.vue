@@ -56,5 +56,10 @@ const setCollapse = (flag: boolean) => {
     padding: 0 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .el-main {
+    background: #f0f2f5;
+    --el-main-padding: 15px;
+  }
 }
 </style>
