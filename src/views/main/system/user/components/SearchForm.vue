@@ -22,7 +22,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="状态" prop="enable">
-            <el-switch v-model="searchFormModel.enable" />
+            <el-switch v-model="searchFormModel.enable" :active-value="1" :inactive-value="0" />
           </el-form-item>
         </el-col>
         <el-col :span="8">
@@ -39,13 +39,13 @@
       </el-row>
     </el-form>
     <div class="search-actions">
-      <el-button @click="clearFormValue" color="#626aef" plain>
+      <el-button @click="clearForm" color="#626aef" plain>
         <el-icon>
           <ep-refresh></ep-refresh>
         </el-icon>
         <span style="margin-left: 5px">清空</span>
       </el-button>
-      <el-button color="#3498db" plain>
+      <el-button @click="searchFrom" color="#3498db" plain>
         <el-icon>
           <ep-search></ep-search>
         </el-icon>
@@ -59,17 +59,23 @@
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
 
+const emit = defineEmits(['searchForm', 'clearForm'])
 const searchFormRef = ref<InstanceType<typeof ElForm>>()
 const searchFormModel = reactive({
   name: '',
   realname: '',
   enable: 1,
   cellphone: '',
-  createAt: []
+  createAt: ''
 })
 
-const clearFormValue = () => {
+const clearForm = () => {
   searchFormRef.value?.resetFields()
+  emit('clearForm')
+}
+
+const searchFrom = () => {
+  emit('searchForm', searchFormModel)
 }
 </script>
 

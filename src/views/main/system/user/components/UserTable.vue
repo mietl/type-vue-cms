@@ -24,18 +24,20 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="150">
-        <el-button link type="primary" size="small">
-          <el-icon size="16">
-            <ant-design-edit />
-          </el-icon>
-          修改
-        </el-button>
-        <el-button link type="danger" size="small">
-          <el-icon size="16">
-            <ant-design-delete-outlined />
-          </el-icon>
-          删除
-        </el-button>
+        <template #default="{ row }">
+          <el-button link type="primary" size="small">
+            <el-icon size="16">
+              <ant-design-edit />
+            </el-icon>
+            修改
+          </el-button>
+          <el-button link type="danger" size="small" @click="handleDeleteRow(row.id)">
+            <el-icon size="16">
+              <ant-design-delete-outlined />
+            </el-icon>
+            删除
+          </el-button>
+        </template>
       </el-table-column>
     </el-table>
     <div class="pagination-block flex justify-end">
@@ -61,6 +63,8 @@ import { useSystemStore } from '@/store/system'
 
 import { formatUTC } from '@/utils/format_date'
 
+const systemStore = useSystemStore()
+
 const currentPage = ref(1)
 const pageSize = ref(10)
 
@@ -72,9 +76,13 @@ const handleCurrentChange = () => {
   fetchUserList()
 }
 
-const systemStore = useSystemStore()
+// 监听数据删除
+const handleDeleteRow = (id: number) => {
+  systemStore.deleteUserByIdAction(id)
+}
 
-function fetchUserList() {
+// 请求用户数据
+function fetchUserList(query?: any) {
   const offset = (currentPage.value - 1) * pageSize.value
   const size = pageSize.value
 
@@ -82,11 +90,17 @@ function fetchUserList() {
     offset,
     size
   }
-  systemStore.postUserListAction(pageInfo)
+  systemStore.postUserListAction({ ...query, ...pageInfo })
 }
 
+// 默认请求一次
 fetchUserList()
+// 用户列表，数据总数
 const { userList, totalCount } = storeToRefs(systemStore)
+
+defineExpose({
+  fetchUserList
+})
 </script>
 
 <style scoped lang="less">

@@ -1,7 +1,11 @@
 import httpRequest from '../'
 
-export function postUserList(pageInfo: any) {
+export function postUserList(query: any) {
   return httpRequest.post('/users/list', {
-    data: pageInfo
+    data: query
   })
+}
+
+export function deleteUserById(id: number) {
+  return httpRequest.delete(`/user/${id}`)
 }
