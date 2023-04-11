@@ -1,10 +1,7 @@
 import httpRequest from '../'
 
-export function postUserList() {
+export function postUserList(pageInfo: any) {
   return httpRequest.post('/users/list', {
-    data: {
-      offset: 0,
-      size: 10
-    }
+    data: pageInfo
   })
 }

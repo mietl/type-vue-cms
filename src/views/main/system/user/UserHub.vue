@@ -9,12 +9,15 @@
     <div class="main-content">
       <user-table></user-table>
     </div>
+   
   </div>
 </template>
 
 <script setup lang="ts">
 import SearchForm from './components/SearchForm.vue'
 import UserTable from './components/UserTable.vue'
+
+
 </script>
 
 <style scoped lang="less">

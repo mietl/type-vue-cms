@@ -7,19 +7,21 @@
       <el-table-column prop="realname" label="姓名" width="120" />
       <el-table-column prop="enable" label="状态" width="90" align="center">
         <template #default="{ row }">
-          <el-tag effect="plain" hit round>{{ row.enable ? '启用' : '禁用' }}</el-tag>
+          <el-tag effect="plain" :type="row.enable ? '' : 'danger'" hit round>{{
+            row.enable ? '启用' : '禁用'
+          }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="cellphone" label="电话号码" />
       <el-table-column prop="createAt" label="创建时间">
-        <tempalte #default="{ row }">
+        <template #default="{ row }">
           {{ formatUTC(row.createAt) }}
-        </tempalte>
+        </template>
       </el-table-column>
       <el-table-column prop="updateAt" label="最近修改">
-        <tempalte #default="{ row }">
+        <template #default="{ row }">
           {{ formatUTC(row.updateAt) }}
-        </tempalte>
+        </template>
       </el-table-column>
       <el-table-column label="操作" width="150">
         <el-button link type="primary" size="small">
@@ -36,18 +38,54 @@
         </el-button>
       </el-table-column>
     </el-table>
+    <div class="pagination-block flex justify-end">
+      <el-pagination
+        class="mt"
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[20, 50, 100, 200]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="totalCount"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import { storeToRefs } from 'pinia'
 import { useSystemStore } from '@/store/system'
 
 import { formatUTC } from '@/utils/format_date'
 
+const currentPage = ref(1)
+const pageSize = ref(10)
+
+const handleSizeChange = () => {
+  fetchUserList()
+}
+
+const handleCurrentChange = () => {
+  fetchUserList()
+}
+
 const systemStore = useSystemStore()
 
-systemStore.postUserListAction()
+function fetchUserList() {
+  const offset = (currentPage.value - 1) * pageSize.value
+  const size = pageSize.value
+
+  const pageInfo = {
+    offset,
+    size
+  }
+  systemStore.postUserListAction(pageInfo)
+}
+
+fetchUserList()
 const { userList, totalCount } = storeToRefs(systemStore)
 </script>
 

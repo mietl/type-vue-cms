@@ -19,7 +19,7 @@
 import { ref } from 'vue'
 
 import MobileLogin from './components/MobileLogin.vue'
-import UserLogin from './components/UserLogin.vue'
+import UserLogin from './components/AccountLogin.vue'
 
 let activeName = ref('user')
 

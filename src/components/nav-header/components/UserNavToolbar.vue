@@ -11,10 +11,14 @@
       <span style="font-size: 23px"> 🍬 </span>
     </div>
     <el-dropdown>
-      <span class="info">
-        <el-avatar :size="30" src="https://avatars.githubusercontent.com/u/69007221?v=4" />
-        <div class="name">young</div>
-      </span>
+      <div class="info flex items-center">
+        <el-avatar
+          class="mr"
+          :size="32"
+          src="https://avatars.githubusercontent.com/u/69007221?v=4g"
+        />
+        <span class="text-large font-600 mr"> young </span>
+      </div>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>
@@ -53,7 +57,8 @@ const logout = () => {
   align-items: center;
 }
 .toolbar {
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   margin-right: 20px;
 
   span {
@@ -85,33 +90,19 @@ const logout = () => {
   }
 }
 
-.toolbar {
-  display: flex;
-  align-items: center;
-}
-
 .info {
-  display: flex;
-  align-items: center;
   cursor: pointer;
   outline: 0;
 
   :global(.info-icon) {
-    font-size: 16px;
+    font-size: 14px;
     margin-right: 5px;
-  }
-
-  .name {
-    margin-left: 5px;
-    font-family: 700;
-    font-size: 16px;
-    color: #303133;
   }
 }
 
 .info {
   :global(.el-dropdown-menu__item) {
-    // padding: 6px 20px;
+    padding: 6px 14px;
   }
 }
 </style>

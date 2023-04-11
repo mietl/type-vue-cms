@@ -10,8 +10,8 @@ export const useSystemStore = defineStore('system', {
     }
   },
   actions: {
-    async postUserListAction() {
-      const usersListResult = await postUserList()
+    async postUserListAction(pageInfo: any) {
+      const usersListResult = await postUserList(pageInfo)
       if (usersListResult.code == 0) {
         const { totalCount, list } = usersListResult.data
         this.userList = list
