@@ -42,10 +42,10 @@
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue'
 import { localCache } from '@/utils/storage'
-import useUserStore from '@/store/user'
+import useLoginStore from '@/store/user'
 import type { IAccount } from '@/types'
 
-const userStore = useUserStore()
+const loginStore = useLoginStore()
 
 const formRef = ref<InstanceType<typeof HTMLFormElement>>()
 

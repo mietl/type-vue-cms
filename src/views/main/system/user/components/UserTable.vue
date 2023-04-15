@@ -1,6 +1,12 @@
 <template>
   <div class="user-table">
-    <span>用户列表</span>
+    <div class="flex justify-between">
+      <span>用户列表</span>
+      <el-button text bg round style="border: 1px solid #424242" @click="newUserClick">
+        <ant-design-user-add-outlined />
+        新建用户
+      </el-button>
+    </div>
     <el-table :data="userList" height="250" style="width: 100%">
       <el-table-column type="index" width="50" />
       <el-table-column prop="name" label="用户名" width="120" />
@@ -52,11 +58,14 @@
         @current-change="handleCurrentChange"
       />
     </div>
+    <UserAlertModal ref="userAlertModal"></UserAlertModal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+import UserAlertModal from './UserAlertModal.vue'
 
 import { storeToRefs } from 'pinia'
 import { useSystemStore } from '@/store/system'
@@ -74,6 +83,11 @@ const handleSizeChange = () => {
 
 const handleCurrentChange = () => {
   fetchUserList()
+}
+
+const userAlertModal = ref<InstanceType<typeof UserAlertModal>>()
+const newUserClick = () => {
+  userAlertModal.value?.changeDialogVisible(true)
 }
 
 // 监听数据删除

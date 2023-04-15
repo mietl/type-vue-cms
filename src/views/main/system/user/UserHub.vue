@@ -6,6 +6,7 @@
     <div class="search">
       <search-form @clearForm="resetData" @search-form="searchData"></search-form>
     </div>
+    <el-divider />
     <div class="main-content">
       <user-table ref="userTableRef"></user-table>
     </div>

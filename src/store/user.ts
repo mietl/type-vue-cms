@@ -9,8 +9,11 @@ import { LOGIN_TOKEN } from '@/config/constant'
 import { localCache } from '@/utils/storage'
 
 import { menuMapRoutes } from '@/utils/map_menu'
+import useStore from './page'
 
-const useUserStore = defineStore('user', {
+import usePageCacheStore from './page'
+
+const useLoginStore = defineStore('user', {
   state() {
     return {
       token: localCache.get(LOGIN_TOKEN) ?? '',
@@ -51,7 +54,11 @@ const useUserStore = defineStore('user', {
         this.userInfo = userInfo
 
         // 动态添加路由
-        this.loadMatchedRoutes()
+        this.addMatchedRoutes()
+
+        // 跳转首页钱，开始加载可能被使用的数据
+        const store = useStore()
+        store.getSetAction()
 
         // 跳转首页
         router.push('/main')
@@ -59,15 +66,18 @@ const useUserStore = defineStore('user', {
         console.log(error)
       }
     },
-    loadMatchedRoutes() {
+    entryPageAction() {
       if (this.token && this.userMenus) {
-        console.log('刷新后执行吗')
-        // 动态添加路由
-        const children = menuMapRoutes(this.userMenus)
-        children.forEach((route) => router.addRoute('main', route))
+        this.addMatchedRoutes()
+        usePageCacheStore().getSetAction()
       }
+    },
+    addMatchedRoutes() {
+      // 动态添加路由
+      const children = menuMapRoutes(this.userMenus)
+      children.forEach((route) => router.addRoute('main', route))
     }
   }
 })
 
-export default useUserStore
+export default useLoginStore

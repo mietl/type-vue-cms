@@ -9,10 +9,10 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { trackMenuPath } from '@/utils/map_menu'
-import useUserStore from '@/store/user'
+import useLoginStore from '@/store/user'
 
 const currentRoute = useRoute()
-const userMenus = useUserStore().userMenus
+const userMenus = useLoginStore().userMenus
 const pathCrumbs = trackMenuPath(currentRoute.path, userMenus)
 </script>
 

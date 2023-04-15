@@ -1,10 +1,18 @@
-import { createPinia } from 'pinia';
+import { createPinia } from 'pinia'
+import type { App } from 'vue'
 
-import { swalPlugin } from '../setup/alert';
+import { swalPlugin } from '../setup/alert'
+import useLoginStore from './user'
 
 const pinia = createPinia()
 
-pinia.use(swalPlugin);
+pinia.use(swalPlugin)
 
+function usePinia(app: App) {
+  app.use(pinia)
 
-export default pinia;
+  const loginStore = useLoginStore()
+  loginStore.entryPageAction()
+}
+
+export default usePinia
