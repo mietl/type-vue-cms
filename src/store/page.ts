@@ -1,13 +1,13 @@
 import { getEntireDepartments, getEntireRoles } from '@/services/system'
 import { defineStore } from 'pinia'
 
-interface IPageCache {
+interface IPageState {
   entireRoles: any[]
   entireDepartments: any[]
 }
 
-const usePageCacheStore = defineStore('page', {
-  state(): IPageCache {
+const usePageStore = defineStore('page', {
+  state(): IPageState {
     return {
       entireRoles: [],
       entireDepartments: []
@@ -21,4 +21,4 @@ const usePageCacheStore = defineStore('page', {
   }
 })
 
-export default usePageCacheStore
+export default usePageStore

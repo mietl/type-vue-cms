@@ -47,7 +47,7 @@
 import { reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import usePageCacheStore from '@/store/page'
+import usePageStore from '@/store/page'
 
 const dialogVisible = ref(false)
 
@@ -55,7 +55,7 @@ const changeDialogVisible = (isShow: boolean) => {
   dialogVisible.value = isShow
 }
 
-const { entireRoles, entireDepartments } = storeToRefs(usePageCacheStore())
+const { entireRoles, entireDepartments } = storeToRefs(usePageStore())
 
 const newUserForm = reactive({
   name: '',

@@ -9,9 +9,9 @@ import { LOGIN_TOKEN } from '@/config/constant'
 import { localCache } from '@/utils/storage'
 
 import { menuMapRoutes } from '@/utils/map_menu'
-import useStore from './page'
+import usePageStore from './page'
 
-import usePageCacheStore from './page'
+import { handleError } from '@/utils/error_handling'
 
 const useLoginStore = defineStore('user', {
   state() {
@@ -24,41 +24,34 @@ const useLoginStore = defineStore('user', {
   actions: {
     async loginAction(account: IAccount) {
       try {
-        const result = await userLogin(account)
+        // 登录
+        const loginResult = await userLogin(account)
 
-        if (result.status == 400) {
-          this.$swalToast.fire({
-            text: result.data,
-            icon: 'error'
-          })
+        if (loginResult.status == 400) {
+          handleError(loginResult.data)
           return
         }
-        const userId = result.data.id
-        const token = result.data.token
 
+        const { id: userId, token } = loginResult.data
+
+        // 存储 token
         this.token = token
-
-        // 本地存储token
         localCache.set(LOGIN_TOKEN, token)
 
-        const userResult = await getUserInfo(userId)
-        const userInfo = userResult.data
+        // 获取用户信息
+        const userInfo = await getUserInfo(userId)
+        this.storeUserInfo(userInfo.data)
 
-        const roleId = userInfo.role.id
-        const menusResult = await getUserRoleMenus(roleId)
-        const userMenus = menusResult.data
-
-        localCache.set('userInfo', userInfo)
-        localCache.set('userMenus', userMenus)
-        this.userMenus = userMenus
-        this.userInfo = userInfo
+        // 获取用户菜单
+        const roleId = userInfo.data.role.id
+        const userMenus = await getUserRoleMenus(roleId)
+        this.storeUserMenus(userMenus.data)
 
         // 动态添加路由
         this.addMatchedRoutes()
 
-        // 跳转首页钱，开始加载可能被使用的数据
-        const store = useStore()
-        store.getSetAction()
+        // 跳转首页前，开始加载可能被使用的数据
+        usePageStore().getSetAction()
 
         // 跳转首页
         router.push('/main')
@@ -66,10 +59,18 @@ const useLoginStore = defineStore('user', {
         console.log(error)
       }
     },
+    storeUserInfo(userInfo: any) {
+      localCache.set('userInfo', userInfo)
+      this.userInfo = userInfo
+    },
+    storeUserMenus(userMenus: any) {
+      localCache.set('userMenus', userMenus)
+      this.userMenus = userMenus
+    },
     entryPageAction() {
       if (this.token && this.userMenus) {
         this.addMatchedRoutes()
-        usePageCacheStore().getSetAction()
+        usePageStore().getSetAction()
       }
     },
     addMatchedRoutes() {

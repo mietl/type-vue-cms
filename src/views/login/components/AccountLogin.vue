@@ -65,7 +65,7 @@ function validateForm() {
     const name = account.name
     const password = account.password
     // 1.登录操作
-    userStore.loginAction({ name, password })
+    loginStore.loginAction({ name, password })
     // 2.记住密码
     if (rememberMe.value) {
       localCache.set('name', name)
@@ -75,6 +75,7 @@ function validateForm() {
       localCache.remove('password')
     }
   } else {
+    // 抛出提示
     formRef.value?.reportValidity()
   }
 }
