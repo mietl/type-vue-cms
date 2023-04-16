@@ -1,4 +1,4 @@
-import httpRequest from '../';
+import httpRequest from '..';
 import type { IAccount } from '@/types';
 
 export function userLogin(account:IAccount){

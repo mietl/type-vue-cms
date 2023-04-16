@@ -1,13 +1,13 @@
 <template>
-  <div class="user-table">
+  <div class="utable">
     <div class="flex justify-between">
       <span>用户列表</span>
-      <el-button text bg round style="border: 1px solid #424242" @click="newUserClick">
+      <el-button text bg round style="border: 1px solid #424242" @click="handleNewUser">
         <ant-design-user-add-outlined />
         新建用户
       </el-button>
     </div>
-    <el-table :data="userList" height="250" style="width: 100%">
+    <el-table :data="userList" style="width: 100%">
       <el-table-column type="index" width="50" />
       <el-table-column prop="name" label="用户名" width="120" />
       <el-table-column prop="realname" label="姓名" width="120" />
@@ -31,13 +31,13 @@
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="{ row }">
-          <el-button link type="primary" size="small">
+          <el-button link type="primary" size="small" @click="handleUserEdit(row)">
             <el-icon size="16">
               <ant-design-edit />
             </el-icon>
             修改
           </el-button>
-          <el-button link type="danger" size="small" @click="handleDeleteRow(row.id)">
+          <el-button link type="danger" size="small" @click="handleUserDelete(row.id)">
             <el-icon size="16">
               <ant-design-delete-outlined />
             </el-icon>
@@ -86,13 +86,17 @@ const handleCurrentChange = () => {
 }
 
 const userAlertModal = ref<InstanceType<typeof UserAlertModal>>()
-const newUserClick = () => {
-  userAlertModal.value?.changeDialogVisible(true)
+const handleNewUser = () => {
+  userAlertModal.value?.showDialogVisible()
 }
 
-// 监听数据删除
-const handleDeleteRow = (id: number) => {
-  systemStore.deleteUserByIdAction(id)
+const handleUserEdit = (row: any) => {
+  userAlertModal.value?.showDialogVisible(true, row)
+}
+
+// 删除用户
+const handleUserDelete = (id: number) => {
+  systemStore.deleteUserAction(id)
 }
 
 // 请求用户数据
@@ -118,7 +122,10 @@ defineExpose({
 </script>
 
 <style scoped lang="less">
-.user-table :deep(.el-table__cell) {
+.el-table {
+  height: calc(100% - 32px - 56px);
+}
+.utable :deep(.el-table__cell) {
   padding: 12px 0;
 }
 </style>

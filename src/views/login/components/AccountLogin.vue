@@ -9,8 +9,8 @@
           name="username"
           v-model="account.name"
           placeholder="请输入用户名"
-          pattern="^[a-z0-9]{6,20}$"
-          title="用户名必须是6~20个字母或数字"
+          pattern="^[a-zA-Z0-9_]+$"
+          title="用户名只能包含字母、数字或下划线"
           required
         />
       </div>
@@ -23,8 +23,8 @@
           v-model="account.password"
           placeholder="请输入密码"
           required
-          pattern="^[a-z0-9]{3,}$"
-          title="密码至少3位"
+          pattern="^.{6,20}$"
+          title="密码长度应在6到20个字符之间"
         />
       </div>
 
@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue'
 import { localCache } from '@/utils/storage'
-import useLoginStore from '@/store/user'
+import useLoginStore from '@/store/login'
 import type { IAccount } from '@/types'
 
 const loginStore = useLoginStore()

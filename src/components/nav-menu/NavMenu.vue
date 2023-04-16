@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import router from '@/router'
-import useLoginStore from '@/store/user'
+import useLoginStore from '@/store/login'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 

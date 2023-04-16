@@ -29,7 +29,7 @@ const SETUP_LOADING = true
 class httpRequest {
   instance: AxiosInstance
   showLoading?: boolean
-  // loading?:any
+  loading?: any
 
   // 添加全局拦截器
   setupInterceptors() {
@@ -43,7 +43,7 @@ class httpRequest {
           //   background: 'rgba(255, 255, 255, 0.7)',
           // })
           if (!$swal.isVisible()) {
-            $swal.fire({
+            this.loading = $swal.fire({
               html: '正在加载，请稍候...',
               allowOutsideClick: false,
               showConfirmButton: false,
@@ -67,23 +67,21 @@ class httpRequest {
     this.instance.interceptors.response.use(
       (res) => {
         // console.log('全局响应成功拦截')
-        // this.loading?.close();
-        $swal.close()
+        this.loading?.close()
         return res.data
       },
       (err) => {
-        $swal.close()
+        this.loading?.close()
         $swalToast.fire({
           text: '请求失败，这似乎不是我们的错。请检查您的网络连接或稍后再试。',
           icon: 'error'
         })
         // console.log('全局响应失败拦截')
-        // this.loading?.close();
         // if (err.response.status === 404) {
         // 处理错误
         // }
         // rejected状态的promise，
-        // axios 会将其包装成一个错误对象,当为普通对象时代表已经处理，后续错误拦截将不工作
+        // axios 会将其包装成一个错误对象,当为普通对象时代表已经处理，后续错误拦截器将不工作
         return Promise.reject(err)
       }
     )

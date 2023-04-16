@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { trackMenuPath } from '@/utils/map_menu'
-import useLoginStore from '@/store/user'
+import useLoginStore from '@/store/login'
 
 const currentRoute = useRoute()
 const userMenus = useLoginStore().userMenus

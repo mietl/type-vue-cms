@@ -1,5 +1,5 @@
 <template>
-  <div class="user-container">
+  <div class="user-wrapper">
     <div class="user-header">
       <span>用户管理</span>
     </div>
@@ -8,7 +8,7 @@
     </div>
     <el-divider />
     <div class="main-content">
-      <user-table ref="userTableRef"></user-table>
+      <user-table ref="userTableRef" style="height: 100%"></user-table>
     </div>
   </div>
 </template>
@@ -31,12 +31,14 @@ const searchData = (query: any) => {
 </script>
 
 <style scoped lang="less">
-.user-container {
+.user-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px - 40px); /* 留出100像素的空间 */
   background: #fff;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
   // .user-header span {
   // border-radius: 20px;
   // padding: 8px 18px;
@@ -44,6 +46,11 @@ const searchData = (query: any) => {
   // margin-right: 10px;
   // background: rgba(255, 118, 30, 0.15);
   // }
+
+  .main-content {
+    overflow: hidden;
+    flex: 1;
+  }
 
   .search {
     margin-top: 20px;

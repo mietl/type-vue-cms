@@ -4,10 +4,10 @@
       <h1>欢迎登录</h1>
       <el-tabs v-model="activeName" stretch>
         <el-tab-pane label="用户名登录" name="user">
-          <user-login ref="userRef" />
+          <account-login ref="userRef" />
         </el-tab-pane>
         <el-tab-pane label="手机号登录" name="phone">
-          <mobile-login ref="mobileRef" />
+          <login-by-phone ref="mobileRef" />
         </el-tab-pane>
         <button type="submit" class="submit-btn" @click="loginAction">登录</button>
       </el-tabs>
@@ -18,12 +18,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import MobileLogin from './components/MobileLogin.vue'
-import UserLogin from './components/AccountLogin.vue'
+import LoginByPhone from './components/LoginByPhone.vue'
+import AccountLogin from './components/AccountLogin.vue'
 
 let activeName = ref('user')
 
-let userRef = ref<InstanceType<typeof UserLogin>>()
+let userRef = ref<InstanceType<typeof AccountLogin>>()
 
 let loginAction = () => {
   userRef.value?.validateForm()
