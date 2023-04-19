@@ -1,6 +1,9 @@
 export interface ISystemState {
   userList: IUser[]
   totalCount: number
+
+  pageList: []
+  pageTotalCount: []
 }
 
 interface IUser {

@@ -1,5 +1,27 @@
 import httpRequest from '../'
 
+export function postPageList(pageName: string, query: any) {
+  return httpRequest.post(`/${pageName}/list`, {
+    data: query
+  })
+}
+
+export function deletePageItem(pageName: string, id: number) {
+  return httpRequest.delete(`/${pageName}/${id}`)
+}
+
+export function createPageItem(pageName: string, itemData: any) {
+  return httpRequest.post(`/${pageName}`, {
+    data: itemData
+  })
+}
+
+export function updatePageItem(pageName: string, id: number, updateItem: any) {
+  return httpRequest.patch(`/${pageName}/${id}`, {
+    data: updateItem
+  })
+}
+
 // 根据条件查询用户
 export function postUserList(query: any) {
   return httpRequest.post('/users/list', {
