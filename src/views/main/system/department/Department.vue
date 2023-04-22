@@ -13,7 +13,7 @@
 
     <el-divider />
     <div class="main-content">
-      <TTable ref="tableRef" style="height: 100%"></TTable>
+      <TTable ref="tableRef" :table-config="tableConfig" style="height: 100%"></TTable>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ import TSearch from '@/components/page-search/TSearch.vue'
 import TTable from '@/components/page-table/TTable.vue'
 
 import searchConfig from './config/search.config'
+import tableConfig from './config/table.config'
 
 const tableRef = ref<InstanceType<typeof TTable>>()
 

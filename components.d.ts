@@ -100,10 +100,18 @@ declare module '@vue/runtime-core' {
     NavHeader: typeof import('./src/components/nav-header/NavHeader.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/NavMenu.vue')['default']
     NavProfile: typeof import('./src/components/nav-header/components/NavProfile.vue')['default']
+    PageFormModal: typeof import('./src/components/page-modal/PageFormModal.vue')['default']
+    PageSearchForm: typeof import('./src/components/page-search/PageSearchForm.vue')['default']
+    PageTable: typeof import('./src/components/page-table/PageTable.vue')['default']
     Profile: typeof import('./src/components/nav-header/components/Profile.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchForm: typeof import('./src/components/page-search/SearchForm.vue')['default']
+    TSearch: typeof import('./src/components/page-search/TSearch.vue')['default']
+    TSearchItem: typeof import('./src/components/page-search/TSearchItem.vue')['default']
+    UserAlertModal: typeof import('./src/components/UserAlertModal.vue')['default']
     UserNavToolbar: typeof import('./src/components/nav-header/components/UserNavToolbar.vue')['default']
+    UserTable: typeof import('./src/components/page-table/UserTable.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

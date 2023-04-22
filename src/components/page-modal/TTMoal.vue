@@ -40,13 +40,13 @@ const systemStore = useSystemStore()
 
 const dialogVisible = ref(false)
 
-interface IModalProps {
-  title?: string
-  searchConfig: {
-    labelWidth?: string
-    formItems: any[]
-  }
-}
+// interface IModalProps {
+//   title?: string
+//   searchConfig: {
+//     labelWidth?: string
+//     formItems: any[]
+//   }
+// }
 
 // const props = defineProps<IModalProps>()
 // const setupFormModel: any = {}
