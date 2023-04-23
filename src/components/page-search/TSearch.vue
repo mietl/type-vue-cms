@@ -4,7 +4,6 @@
       <el-row :gutter="20">
         <template v-for="item in searchConfig.formItems" :key="item.prop">
           <el-col :span="8">
-            <!-- <TSearchItem :item="item"></TSearchItem> -->
             <el-form-item :label="item.label" :prop="item.prop">
               <template v-if="item.type === 'input'">
                 <el-input

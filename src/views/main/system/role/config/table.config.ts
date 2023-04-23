@@ -1,29 +1,22 @@
 import type { ItableConfig } from '@/components/page-table/type'
 
 const tableConfig: ItableConfig = {
-  title: '部门列表',
-  newItemText: '新建部门',
+  title: '角色列表',
+  newItemText: '新建角色',
   columnProps: [
     {
       type: 'index',
-      width: 60,
-      prop: ''
+      prop: '',
+      width: 60
     },
     {
-      label: '部门名称',
+      label: '角色名称',
       prop: 'name',
       width: 120
     },
     {
-      label: '部门领导',
-      prop: 'leader',
-      width: 120
-    },
-    {
-      type: 'custom',
-      label: '上级部门',
-      prop: 'parentId',
-      slotName: 'parentId',
+      label: '权限介绍',
+      prop: 'intro',
       width: 120
     },
     {
@@ -38,9 +31,9 @@ const tableConfig: ItableConfig = {
     },
     {
       type: 'handler',
+      prop: '',
       label: '操作',
-      width: 150,
-      prop: ''
+      width: 150
     }
   ]
 }

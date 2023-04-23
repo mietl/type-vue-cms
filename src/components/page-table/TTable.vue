@@ -50,7 +50,7 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <TTModal ref="formModalRef"></TTModal>
+    <TTModal ref="formModalRef" :pageName="pageName" :modal-config="modalConfig"></TTModal>
   </div>
 </template>
 
@@ -64,21 +64,22 @@ import TTModal from '@/components/page-modal/TTMoal.vue'
 
 import { formatUTC } from '@/utils/format_date'
 
+import type { ItableConfig, IModalConfig } from './type'
+
 const systemStore = useSystemStore()
-interface ITTableProps {
-  tableConfig: {
-    title: string
-    newItemText: string
-    columnProps: any[]
-  }
+
+export interface ITTableProps {
+  pageName: string
+  tableConfig: ItableConfig
+  modalConfig: IModalConfig
 }
+
 const props = defineProps<ITTableProps>()
 
 const formModalRef = ref<InstanceType<typeof TTModal>>()
 // 新增数据
 const handleNewItem = () => {
   formModalRef.value?.showDialogVisible()
-  console.log(formModalRef.value)
 }
 // 编辑数据
 const handleEditItem = (row: any) => {
@@ -87,7 +88,7 @@ const handleEditItem = (row: any) => {
 
 // 删除数据
 const handleDeleteItem = (id: number) => {
-  systemStore.deleteItemAction('department', id)
+  systemStore.deleteItemAction(props.pageName, id)
 }
 
 // 查询数据
@@ -101,7 +102,7 @@ const fetchPageList = (query?: any) => {
     offset,
     size
   }
-  systemStore.postListAction('department', { ...query, ...pageInfo })
+  systemStore.postListAction(props.pageName, { ...query, ...pageInfo })
 }
 // 默认请求一次
 fetchPageList()

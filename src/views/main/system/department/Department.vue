@@ -13,48 +13,53 @@
 
     <el-divider />
     <div class="main-content">
-      <TTable ref="tableRef" :table-config="tableConfig" style="height: 100%"></TTable>
+      <TTable
+        pageName="department"
+        ref="tableRef"
+        :table-config="tableConfig"
+        :modal-config="modalConfig"
+        style="height: 100%"
+      >
+        <template #parentId="{ row, prop }">
+          <span>{{ getDepartmentById(row[prop]) }}</span>
+        </template>
+      </TTable>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useSearch } from '@/hooks/'
 
 import TSearch from '@/components/page-search/TSearch.vue'
 import TTable from '@/components/page-table/TTable.vue'
 
 import searchConfig from './config/search.config'
 import tableConfig from './config/table.config'
+import modalConfig from './config/modal.config'
 
-const tableRef = ref<InstanceType<typeof TTable>>()
+import usePageStore from '@/store/page'
 
-const resetData = () => {
-  tableRef.value?.fetchPageList()
+const { entireDepartments } = storeToRefs(usePageStore())
+const getDepartmentById = (id: string | number) => {
+  let dep = entireDepartments.value.find((item) => item.id == id)
+  if (dep) {
+    return dep.name
+  }
+  return ''
 }
 
-const searchData = (query: any) => {
-  tableRef.value?.fetchPageList(query)
-}
+modalConfig.formItems.forEach((item) => {
+  if (item.prop === 'parentId') {
+    const options = entireDepartments.value.map((item) => ({ label: item.name, value: item.id }))
+    item.options = options
+  }
+})
+
+const { tableRef, resetData, searchData } = useSearch()
 </script>
 
 <style scoped lang="less">
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 60px - 40px); /* 留出100像素的空间 */
-  background: #fff;
-  padding: 20px 20px 0px 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-
-  .main-content {
-    overflow: hidden;
-    flex: 1;
-  }
-
-  .search {
-    margin-top: 20px;
-  }
-}
+@import '@/assets/css/layout.less';
 </style>
