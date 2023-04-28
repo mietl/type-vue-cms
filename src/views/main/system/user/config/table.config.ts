@@ -1,30 +1,34 @@
 import type { ItableConfig } from '@/types/table'
 
 const tableConfig: ItableConfig = {
-  title: '部门列表',
-  newItemText: '新建部门',
+  title: '用户列表',
+  newItemText: '新建用户',
   columnProps: [
     {
       type: 'index',
-      width: 60,
-      prop: ''
+      prop: '',
+      width: 60
     },
     {
-      label: '部门名称',
+      label: '用户名',
       prop: 'name',
       width: 120
     },
     {
-      label: '部门领导',
-      prop: 'leader',
+      label: '姓名',
+      prop: 'realname',
       width: 120
     },
     {
-      type: 'custom',
-      label: '上级部门',
-      prop: 'parentId',
-      slotName: 'parentId',
-      width: 120
+      label: '状态',
+      prop: 'enable',
+      width: 90,
+      type:'custom',
+      slotName:'enable'
+    },
+    {
+      label: '电话号码',
+      prop: 'cellphone',
     },
     {
       type: 'timeAt',
@@ -38,9 +42,9 @@ const tableConfig: ItableConfig = {
     },
     {
       type: 'handler',
+      prop: '',
       label: '操作',
-      width: 150,
-      prop: ''
+      width: 150
     }
   ]
 }

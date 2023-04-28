@@ -1,4 +1,4 @@
-import type { ItableConfig } from '@/components/page-table/type'
+import type { ItableConfig } from '@/types/table'
 
 const tableConfig: ItableConfig = {
   title: '角色列表',

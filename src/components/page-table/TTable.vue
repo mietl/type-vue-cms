@@ -7,9 +7,9 @@
         {{ tableConfig.newItemText ?? '新建数据' }}
       </el-button>
     </div>
-    <el-table :data="pageList" style="width: 100%">
+    <el-table :data="pageList" style="width: 100%" :rowKey="tableConfig.childrenProps?.rowKey">
       <template v-for="column in tableConfig.columnProps" :key="column.prop">
-        <el-table-column v-if="column.type === 'custom'" v-bind="column">
+        <el-table-column v-if="column.type === 'custom'" v-bind="column" >
           <template #default="scope">
             <slot :name="column.slotName" v-bind="scope" :prop="column.prop"></slot>
           </template>
@@ -50,7 +50,11 @@
         @current-change="handleCurrentChange"
       />
     </div>
-    <TTModal ref="formModalRef" :pageName="pageName" :modal-config="modalConfig"></TTModal>
+    <TTModal v-if="modalConfig" ref="formModalRef" :pageName="pageName" :modal-config="modalConfig">
+      <template v-for="slotName in modalSlots" #[slotName]>
+          <slot :name="slotName"></slot>
+      </template>
+    </TTModal>
   </div>
 </template>
 
@@ -64,7 +68,7 @@ import TTModal from '@/components/page-modal/TTMoal.vue'
 
 import { formatUTC } from '@/utils/format_date'
 
-import type { ItableConfig, IModalConfig } from './type'
+import type { ItableConfig, IModalConfig } from '@/types/table'
 
 const systemStore = useSystemStore()
 
@@ -76,13 +80,23 @@ export interface ITTableProps {
 
 const props = defineProps<ITTableProps>()
 
+
+const emit = defineEmits(['beforeEdit','beforeNew'])
+
+const modalSlots = props.modalConfig.formItems
+  .filter((item) => item.type == 'custom' && item.slotName)
+  .map((item) => item.slotName)
+
+
 const formModalRef = ref<InstanceType<typeof TTModal>>()
 // 新增数据
 const handleNewItem = () => {
+  emit('beforeNew');
   formModalRef.value?.showDialogVisible()
 }
 // 编辑数据
 const handleEditItem = (row: any) => {
+  emit('beforeEdit',row);
   formModalRef.value?.showDialogVisible(true, row)
 }
 

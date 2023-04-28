@@ -1,39 +1,25 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="新建用户" width="33%" center>
+  <el-dialog v-model="dialogVisible" :title="isEditState?modalConfig.title.edit:modalConfig.title.new" width="33%" center>
     <el-form label-width="70">
-      <template v-for="item in modalConfig.formItems" :key="item.prop">
-        <el-row :gutter="20">
-          <el-col :span="item.span ?? 24">
-            <el-form-item :label="item.label">
-              <template v-if="item.type === 'input'">
-                <el-input
-                  v-model="pageFormModel[item.prop]"
-                  :placeholder="item.placeholder"
-                ></el-input>
+      <el-row :gutter="20">
+        <template v-for="item in modalConfig.formItems" :key="item.prop">
+            <el-col :span="item.span ?? 24">
+              <template v-if="item.slotName">
+                <el-form-item :label="item.label" :prop="item.prop">
+                  <slot :name="item.slotName"></slot>
+                </el-form-item>
               </template>
-              <template v-if="item.type === 'date-picker'">
-                <el-date-picker
-                  v-model="pageFormModel[item.prop]"
-                  type="daterange"
-                  start-placeholder="开始时间"
-                  end-placeholder="结束时间"
-                >
-                </el-date-picker>
+              <template v-else>
+                <TFormTile
+                  v-show="!item.hidden"
+                  :item="item"
+                  :value="pageFormModel[item.prop]"
+                  @update:model-value="pageFormModel[item.prop] = $event"
+                ></TFormTile>
               </template>
-              <template v-if="item.type === 'select'">
-                <el-select v-model="pageFormModel[item.prop]" style="width: 100%">
-                  <el-option
-                    v-for="option in item.options"
-                    :key="option.value"
-                    :value="option.value"
-                    :label="option.label"
-                  ></el-option>
-                </el-select>
-              </template>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </template>
+            </el-col>
+        </template>
+    </el-row>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -45,15 +31,22 @@
 </template>
 
 <script setup lang="ts">
+import TFormTile from '@/components/form-tile/TFormTile.vue'
+
 import { reactive, ref } from 'vue'
 
-import type { IModalConfig } from '../page-table/type'
+
+import type { IModalConfig } from '@/types/table'
 
 import { useSystemStore } from '@/store/system'
 
 const systemStore = useSystemStore()
 
 const dialogVisible = ref(false)
+
+import { inject } from 'vue'
+
+const payloadData: any = inject('payloadData')
 
 interface IModalProps {
   pageName: string
@@ -88,11 +81,18 @@ const showDialogVisible = (isEdit: boolean = false, itemData?: any) => {
 }
 
 const handleFormCommit = () => {
+  let assignForm = pageFormModel
+  if (payloadData) {
+    assignForm = { ...pageFormModel, ...payloadData }
+  }
+
   dialogVisible.value = false
   if (isEditState.value) {
-    systemStore.updateItemAction(props.pageName, updateItemId.value, pageFormModel)
+    systemStore.updateItemAction(props.pageName, updateItemId.value, assignForm)
+    console.log(assignForm)
   } else {
-    systemStore.createItemAction(props.pageName, pageFormModel)
+    systemStore.createItemAction(props.pageName, assignForm)
+    console.log(assignForm)
   }
 }
 

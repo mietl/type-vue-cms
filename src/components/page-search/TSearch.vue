@@ -4,33 +4,12 @@
       <el-row :gutter="20">
         <template v-for="item in searchConfig.formItems" :key="item.prop">
           <el-col :span="8">
-            <el-form-item :label="item.label" :prop="item.prop">
-              <template v-if="item.type === 'input'">
-                <el-input
-                  v-model="searchFormModel[item.prop]"
-                  :placeholder="item.placeholder"
-                ></el-input>
-              </template>
-              <template v-if="item.type === 'date-picker'">
-                <el-date-picker
-                  v-model="searchFormModel[item.prop]"
-                  type="daterange"
-                  start-placeholder="开始时间"
-                  end-placeholder="结束时间"
-                >
-                </el-date-picker>
-              </template>
-              <template v-if="item.type === 'select'">
-                <el-select v-model="searchFormModel[item.prop]">
-                  <el-option
-                    v-for="option in item.options"
-                    :key="option.value"
-                    :value="option.value"
-                    :label="option.label"
-                  ></el-option>
-                </el-select>
-              </template>
-            </el-form-item>
+            <!-- v-model:[item.prop]="searchFormModel[item.prop]" -->
+            <TFormTile
+              :item="item"
+              :value="searchFormModel[item.prop]"
+              @update:model-value="searchFormModel[item.prop] = $event"
+            ></TFormTile>
           </el-col>
         </template>
       </el-row>
@@ -55,11 +34,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
+import TFormTile from '@/components/form-tile/TFormTile.vue'
+import type { ITileItem } from '@/types/form'
 
 interface IProps {
   searchConfig: {
     labelWidth?: string
-    formItems: any[]
+    formItems: ITileItem[]
   }
 }
 

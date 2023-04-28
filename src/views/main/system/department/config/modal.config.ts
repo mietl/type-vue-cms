@@ -1,4 +1,4 @@
-import type { IModalConfig } from '@/components/page-table/type'
+import type { IModalConfig } from '@/types/table'
 const modalConfig: IModalConfig = {
   title: {
     edit: '编辑部门',

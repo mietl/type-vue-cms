@@ -60,3 +60,18 @@ export function trackMenuPath(path: string, menus: any[]): IPathCrumbs[] {
 
   return pathCrumbs
 }
+
+export function menuMapKeys(menu:any[]):number[]{
+  const keys:any[] = [];
+  function flattenTree(menulist:any){
+    for (const item of menulist) {
+      if(item.children){
+        flattenTree(item.children)
+      }else{
+        keys.push(item.id)
+      }
+    }
+  }
+  flattenTree(menu);
+ return keys;
+}

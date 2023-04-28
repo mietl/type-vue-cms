@@ -1,4 +1,11 @@
-export default {
+import type { ITileItem } from '@/types/form'
+
+export interface ISearchConfig {
+  labelWidth: string
+  formItems: ITileItem[]
+}
+
+const searchConfig: ISearchConfig = {
   labelWidth: '80',
   formItems: [
     {
@@ -20,3 +27,5 @@ export default {
     }
   ]
 }
+
+export default searchConfig

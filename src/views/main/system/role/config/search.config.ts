@@ -10,7 +10,7 @@ export default {
     {
       type: 'input',
       label: '权限介绍',
-      prop: 'leader',
+      prop: 'intro',
       placeholder: '请输入查询的权限介绍内容'
     },
     {

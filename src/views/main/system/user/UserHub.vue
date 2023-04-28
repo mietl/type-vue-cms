@@ -4,30 +4,67 @@
       <span>用户管理</span>
     </div>
     <div class="search">
-      <search-form @clearForm="resetData" @search-form="searchData"></search-form>
+      <TSearch
+        :searchConfig="searchConfig"
+        @clearForm="resetData"
+        @search-form="searchData"
+        pageName="users"
+      ></TSearch>
     </div>
     <el-divider />
     <div class="main-content">
-      <user-table ref="userTableRef" style="height: 100%"></user-table>
+      <TTable @before-edit="beforeEditItem" :modal-config="modalConfig" :table-config="tableConfig" pageName="users" ref="tableRef" style="height: 100%">
+        <template #enable="{ row }">
+          <el-tag effect="plain" :type="row.enable ? '' : 'danger'" hit round>{{
+            row.enable ? '启用' : '禁用'
+          }}</el-tag>
+        </template>
+      </TTable>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import TSearch from '@/components/page-search/TSearch.vue'
+import TTable from '@/components/page-table/TTable.vue'
 
-import SearchForm from './components/SearchForm.vue'
-import UserTable from './components/UserTable.vue'
+import { storeToRefs } from 'pinia';
+import usePageStore from '@/store/page'
 
-const userTableRef = ref<InstanceType<typeof UserTable>>()
 
-const resetData = () => {
-  userTableRef.value?.fetchUserList()
+import searchConfig from './config/search.config'
+import tableConfig from './config/table.config'
+import modalConfig from './config/modal.config'
+
+import { findFormItemByProp } from '@/utils/form_config'
+
+
+import { useSearch } from '@/hooks/'
+
+const { entireDepartments,entireRoles } = storeToRefs(usePageStore())
+
+const stateMapOption = (list:any)=>{
+  return list.map((item:any) => ({ label: item.name, value: item.id }))
 }
 
-const searchData = (query: any) => {
-  userTableRef.value?.fetchUserList(query)
+modalConfig.formItems.forEach((item) => {
+  if (item.prop === 'departmentId') {
+    item.options = stateMapOption(entireDepartments.value)
+  }
+  if (item.prop === 'roleId') {
+    item.options = stateMapOption(entireRoles.value)
+  }
+})
+
+let passwordItem = findFormItemByProp(modalConfig.formItems,'password')
+const beforeEditItem = ()=>{
+  if(passwordItem){
+    passwordItem.hidden = true
+  }
 }
+
+
+const { tableRef, resetData, searchData } = useSearch()
 </script>
 
 <style scoped lang="less">
@@ -46,7 +83,6 @@ const searchData = (query: any) => {
   // margin-right: 10px;
   // background: rgba(255, 118, 30, 0.15);
   // }
-
   .main-content {
     overflow: hidden;
     flex: 1;

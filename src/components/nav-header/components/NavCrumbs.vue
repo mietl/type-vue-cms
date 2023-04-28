@@ -7,13 +7,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { trackMenuPath } from '@/utils/map_menu'
 import useLoginStore from '@/store/login'
 
 const currentRoute = useRoute()
 const userMenus = useLoginStore().userMenus
-const pathCrumbs = trackMenuPath(currentRoute.path, userMenus)
+
+const pathCrumbs = computed(() => {
+  return trackMenuPath(currentRoute.path, userMenus)
+})
 </script>
 
 <style scoped></style>

@@ -1,22 +1,25 @@
-import { getEntireDepartments, getEntireRoles } from '@/services/system'
+import { getEntireDepartments, getEntireRoles, getEntireMenus } from '@/services/system'
 import { defineStore } from 'pinia'
 
 interface IPageState {
   entireRoles: any[]
   entireDepartments: any[]
+  entireMenus: any[]
 }
 
 const usePageStore = defineStore('page', {
   state(): IPageState {
     return {
       entireRoles: [],
-      entireDepartments: []
+      entireDepartments: [],
+      entireMenus: []
     }
   },
   actions: {
     getSetAction() {
       getEntireRoles().then((res) => (this.entireRoles = res.data.list))
       getEntireDepartments().then((res) => (this.entireDepartments = res.data.list))
+      getEntireMenus().then((res) => (this.entireMenus = res.data.list))
     }
   }
 })

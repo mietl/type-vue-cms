@@ -56,3 +56,7 @@ export function getEntireRoles() {
 export function getEntireDepartments() {
   return httpRequest.post(`/department/list`)
 }
+
+export function getEntireMenus() {
+  return httpRequest.post(`/menu/list`)
+}

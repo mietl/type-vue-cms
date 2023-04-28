@@ -1,7 +1,15 @@
+import type { ITileItem } from './form'
 export interface ItableConfig {
-  title: string
-  newItemText: string
+  title?: string
+  newItemText?: string
   columnProps: ItableConfigTile[]
+  childrenProps?: {
+    rowKey: string | number
+    treeProps?: {
+      hasChildren?: string
+      children?: string
+    }
+  }
 }
 
 type ItableTileType = 'custom' | 'timeAt' | 'handler' | 'index'
@@ -19,12 +27,4 @@ export interface IModalConfig {
     new: string
   }
   formItems: ITileItem[]
-}
-
-type IFormTileType = 'input' | 'date-picker' | 'select'
-export interface ITileItem {
-  label: string
-  type?: IFormTileType
-  prop: string
-  [key: string]: any
 }

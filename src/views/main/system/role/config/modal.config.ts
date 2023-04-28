@@ -1,4 +1,4 @@
-import type { IModalConfig } from '@/components/page-table/type'
+import type { IModalConfig } from '@/types/table'
 const modalConfig: IModalConfig = {
   title: {
     edit: '编辑角色',
@@ -14,6 +14,12 @@ const modalConfig: IModalConfig = {
       label: '角色描述',
       prop: 'intro',
       type: 'input'
+    },
+    {
+      label: '菜单选择',
+      slotName: 'menulist',
+      prop: 'menuList',
+      type: 'custom'
     }
   ]
 }

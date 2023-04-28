@@ -7,7 +7,7 @@
       <TSearch
         :search-config="searchConfig"
         @clearForm="resetData"
-        @search-form="searchData"
+        @searchForm="searchData"
       ></TSearch>
     </div>
 

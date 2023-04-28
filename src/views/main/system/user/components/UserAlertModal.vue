@@ -1,5 +1,10 @@
 <template>
-  <el-dialog v-model="dialogVisible" title="新建用户" width="33%" center>
+  <el-dialog
+    v-model="dialogVisible"
+    :title="isEditState ? '编辑用户' : '新建用户'"
+    width="33%"
+    center
+  >
     <el-form label-width="70">
       <el-form-item label="用户名" prop="name">
         <el-input v-model="userFormModel.name"></el-input>
@@ -15,8 +20,8 @@
       </el-form-item>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="角色" prop="roleId">
-            <el-select label="选择角色" v-model="userFormModel.roleId">
+          <el-form-item label="选择角色" prop="roleId">
+            <el-select v-model="userFormModel.roleId">
               <template v-for="role in entireRoles" :key="role.id">
                 <el-option :value="role.id" :label="role.name"></el-option>
               </template>
@@ -25,7 +30,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="部门" prop="roleId">
-            <el-select label="选择角色" v-model="userFormModel.departmentId">
+            <el-select label="选择部门" v-model="userFormModel.departmentId">
               <template v-for="department in entireDepartments" :key="department.id">
                 <el-option :value="department.id" :label="department.name"></el-option>
               </template>
