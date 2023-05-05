@@ -15,13 +15,12 @@
       <TTable
         pageName="role"
         ref="tableRef"
-        @before-edit="beforeEditItem"
-        @before-new="beforeNewItem"
+        @before-edit="beforeEditHandle"
+        @before-new="beforeNewHandle"
         :table-config="tableConfig"
         :modal-config="modalConfig"
         style="height: 100%"
       >
-
         <template #menulist>
           <el-tree-select
             ref="treeRef"
@@ -51,14 +50,14 @@ import { useSearch } from '@/hooks/'
 
 import usePageStore from '@/store/page'
 
-import { provide, reactive,ref,nextTick } from 'vue'
+import { provide, reactive, ref, nextTick } from 'vue'
 
 import { storeToRefs } from 'pinia'
 
 import { menuMapKeys } from '@/utils/map_menu'
 
-const checkedTags = ref();
-
+// 输入框显示的菜单标签
+const checkedTags = ref()
 
 export interface IPayloadData {
   menuList: number[]
@@ -75,25 +74,25 @@ const checkMenuTree = (_: any, { checkedKeys, halfCheckedKeys }: any) => {
 
 provide('payloadData', payloadData)
 
-
-
-const treeRef = ref();
-const beforeEditItem = (row:any)=>{
+const treeRef = ref()
+const beforeEditHandle = (row: any) => {
+  console.log(row)
   let checkTreeKeys = menuMapKeys(row.menuList)
-  nextTick(()=>{
-    checkedTags.value = checkTreeKeys
+  let firstTreeKeys = row.menuList.map((item: any) => item.id)
+
+  nextTick(() => {
     treeRef.value?.setCheckedKeys(checkTreeKeys)
+    checkedTags.value = firstTreeKeys
     // checkedTags.value = treeRef.value?.getCheckedKeys()
   })
 }
 
-const beforeNewItem = ()=>{
-  nextTick(()=>{
+const beforeNewHandle = () => {
+  nextTick(() => {
     checkedTags.value = []
     treeRef.value?.setCheckedKeys([])
   })
 }
-
 
 const { tableRef, resetData, searchData } = useSearch()
 

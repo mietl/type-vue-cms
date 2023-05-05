@@ -5,10 +5,10 @@ function dirRoutes() {
     eager: true // 直接拿到import的结果
   })
 
-  const routes = Object.values(routeFiles).map((_module) => _module.default)
-  return routes
+  return Object.values(routeFiles).map((_module) => _module.default)
 }
 
+// 首次打开页面定向的紫菜蛋
 export let firstMenuItem: any = null
 
 export function menuMapRoutes(menus: any[]): RouteRecordRaw[] {
@@ -61,17 +61,38 @@ export function trackMenuPath(path: string, menus: any[]): IPathCrumbs[] {
   return pathCrumbs
 }
 
-export function menuMapKeys(menu:any[]):number[]{
-  const keys:any[] = [];
-  function flattenTree(menulist:any){
+export function menuMapKeys(menu: any[]): number[] {
+  const keys: any[] = []
+  function flattenTree(menulist: any) {
     for (const item of menulist) {
-      if(item.children){
+      if (item.children) {
         flattenTree(item.children)
-      }else{
+      } else {
         keys.push(item.id)
       }
     }
   }
-  flattenTree(menu);
- return keys;
+  flattenTree(menu)
+  return keys
+}
+
+/**
+ * @return 权限的列表
+ * @param menu 菜单的列表
+ */
+export function menuMapPermissions(menu: any[]) {
+  const permissions: string[] = []
+
+  function _getFloorMenu(menulist: any[]) {
+    for (const item of menulist) {
+      if (item.type == 3) {
+        permissions.push(item.permission)
+      } else {
+        _getFloorMenu(item.children || [])
+      }
+    }
+  }
+
+  _getFloorMenu(menu)
+  return permissions
 }

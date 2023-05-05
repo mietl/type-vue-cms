@@ -20,7 +20,7 @@
         :modal-config="modalConfig"
         style="height: 100%"
       >
-        <template #parentId="{ row, prop }">
+        <template #parentId="{ row, prop }: SlotProps">
           <span>{{ getDepartmentById(row[prop]) }}</span>
         </template>
       </TTable>
@@ -40,6 +40,10 @@ import tableConfig from './config/table.config'
 import modalConfig from './config/modal.config'
 
 import usePageStore from '@/store/page'
+
+interface SlotProps {
+  [key: string]: any
+}
 
 const { entireDepartments } = storeToRefs(usePageStore())
 const getDepartmentById = (id: string | number) => {

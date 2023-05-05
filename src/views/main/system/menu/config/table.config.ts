@@ -1,6 +1,7 @@
 import type { ItableConfig } from '@/types/table'
 const tableConfig: ItableConfig = {
   title: '菜单管理',
+  newItemText: '新建菜单',
   columnProps: [
     {
       label: '菜单名称',

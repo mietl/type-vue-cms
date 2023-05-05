@@ -8,7 +8,7 @@
       <span>
         <ant-design:github-filled></ant-design:github-filled>
       </span>
-      <span style="font-size: 23px"> 🍬 </span>
+      <span style="font-size: 23px"> &#x1F36C; </span>
     </div>
     <el-dropdown>
       <div class="info flex items-center">
@@ -46,7 +46,6 @@ import { localCache } from '@/utils/storage'
 
 const logout = () => {
   localCache.remove(LOGIN_TOKEN)
-  console.log('删除了没', localCache.get(LOGIN_TOKEN))
   router.push('/login')
 }
 </script>
@@ -55,6 +54,7 @@ const logout = () => {
 .profile {
   display: flex;
   align-items: center;
+  font-family: 'SanFrancisco', sans-serif;
 }
 .toolbar {
   display: flex;

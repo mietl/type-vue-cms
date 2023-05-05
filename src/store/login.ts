@@ -8,17 +8,24 @@ import router from '@/router'
 import { LOGIN_TOKEN } from '@/config/constant'
 import { localCache } from '@/utils/storage'
 
-import { menuMapRoutes } from '@/utils/map_menu'
+import { menuMapRoutes, menuMapPermissions } from '@/utils/map_menu'
 import usePageStore from './page'
 
 import { handleError } from '@/utils/message'
 
+interface ILoginState {
+  token: string
+  userInfo: any
+  userMenus: any[]
+  permissions: string[]
+}
 const useLoginStore = defineStore('user', {
-  state() {
+  state(): ILoginState {
     return {
       token: localCache.get(LOGIN_TOKEN) ?? '',
       userInfo: localCache.get('userInfo') ?? {},
-      userMenus: localCache.get('userMenus') ?? []
+      userMenus: localCache.get('userMenus') ?? [],
+      permissions: []
     }
   },
   actions: {
@@ -66,10 +73,13 @@ const useLoginStore = defineStore('user', {
     storeUserMenus(userMenus: any) {
       localCache.set('userMenus', userMenus)
       this.userMenus = userMenus
+
+      this.permissions = menuMapPermissions(userMenus)
     },
     entryPageAction() {
       if (this.token && this.userMenus) {
         this.addMatchedRoutes()
+        this.permissions = menuMapPermissions(this.userMenus)
         usePageStore().getSetAction()
       }
     },
