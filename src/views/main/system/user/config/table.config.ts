@@ -23,12 +23,12 @@ const tableConfig: ItableConfig = {
       label: '状态',
       prop: 'enable',
       width: 90,
-      type:'custom',
-      slotName:'enable'
+      type: 'custom',
+      slotName: 'enable'
     },
     {
       label: '电话号码',
-      prop: 'cellphone',
+      prop: 'cellphone'
     },
     {
       type: 'timeAt',

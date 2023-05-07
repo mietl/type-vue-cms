@@ -13,7 +13,14 @@
     </div>
     <el-divider />
     <div class="main-content">
-      <TTable @before-edit="beforeEditItem" :modal-config="modalConfig" :table-config="tableConfig" pageName="users" ref="tableRef" style="height: 100%">
+      <TTable
+        @before-edit="beforeEditItem"
+        :modal-config="modalConfig"
+        :table-config="tableConfig"
+        pageName="users"
+        ref="tableRef"
+        style="height: 100%"
+      >
         <template #enable="{ row }">
           <el-tag effect="plain" :type="row.enable ? '' : 'danger'" hit round>{{
             row.enable ? '启用' : '禁用'
@@ -28,9 +35,8 @@
 import TSearch from '@/components/page-search/TSearch.vue'
 import TTable from '@/components/page-table/TTable.vue'
 
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import usePageStore from '@/store/page'
-
 
 import searchConfig from './config/search.config'
 import tableConfig from './config/table.config'
@@ -38,13 +44,12 @@ import modalConfig from './config/modal.config'
 
 import { findFormItemByProp } from '@/utils/form_config'
 
-
 import { useSearch } from '@/hooks/'
 
-const { entireDepartments,entireRoles } = storeToRefs(usePageStore())
+const { entireDepartments, entireRoles } = storeToRefs(usePageStore())
 
-const stateMapOption = (list:any)=>{
-  return list.map((item:any) => ({ label: item.name, value: item.id }))
+const stateMapOption = (list: any) => {
+  return list.map((item: any) => ({ label: item.name, value: item.id }))
 }
 
 modalConfig.formItems.forEach((item) => {
@@ -56,13 +61,12 @@ modalConfig.formItems.forEach((item) => {
   }
 })
 
-let passwordItem = findFormItemByProp(modalConfig.formItems,'password')
-const beforeEditItem = ()=>{
-  if(passwordItem){
+let passwordItem = findFormItemByProp(modalConfig.formItems, 'password')
+const beforeEditItem = () => {
+  if (passwordItem) {
     passwordItem.hidden = true
   }
 }
-
 
 const { tableRef, resetData, searchData } = useSearch()
 </script>
@@ -76,13 +80,7 @@ const { tableRef, resetData, searchData } = useSearch()
   padding: 20px 20px 0px 20px;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  // .user-header span {
-  // border-radius: 20px;
-  // padding: 8px 18px;
-  // margin-bottom: 5px;
-  // margin-right: 10px;
-  // background: rgba(255, 118, 30, 0.15);
-  // }
+
   .main-content {
     overflow: hidden;
     flex: 1;

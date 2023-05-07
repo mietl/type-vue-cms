@@ -1,10 +1,9 @@
 <template>
-  <div class="search-form">
+  <div class="search-form" v-if="isQuery">
     <el-form label-width="80px" :model="searchFormModel" ref="searchFormRef">
       <el-row :gutter="20">
         <template v-for="item in searchConfig.formItems" :key="item.prop">
           <el-col :span="8">
-            <!-- v-model:[item.prop]="searchFormModel[item.prop]" -->
             <TFormTile
               :item="item"
               :value="searchFormModel[item.prop]"
@@ -37,7 +36,10 @@ import type { ElForm } from 'element-plus'
 import TFormTile from '@/components/form-tile/TFormTile.vue'
 import type { ITileItem } from '@/types/form'
 
+import usePermissions from '@/hooks/usePermissions'
+
 interface IProps {
+  pageName: string
   searchConfig: {
     labelWidth?: string
     formItems: ITileItem[]
@@ -46,9 +48,12 @@ interface IProps {
 
 const props = defineProps<IProps>()
 
+const isQuery = usePermissions(`${props.pageName}:query`)
+
 const emit = defineEmits(['searchForm', 'clearForm'])
 const searchFormRef = ref<InstanceType<typeof ElForm>>()
 
+// 初始化模型，并设置默认值
 const formModel: any = {}
 for (const item of props.searchConfig.formItems) {
   formModel[item.prop] = item.value ?? ''

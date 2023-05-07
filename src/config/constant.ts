@@ -1,6 +1,3 @@
-const LOGIN_TOKEN = 'token';
+const LOGIN_TOKEN = 'token'
 
-
-export  {
-  LOGIN_TOKEN,
-}
+export { LOGIN_TOKEN }

@@ -1,10 +1,11 @@
-import { deletePageItem, createPageItem, updatePageItem } from '@/services/system'
+import { deletePageItem, createPageItem, updatePageItem } from '@/service/system'
 
-import { postPageList } from '@/services/system'
+import { postPageList } from '@/service/system'
 import { defineStore } from 'pinia'
 
 import { handleSuccess, handleError } from '@/utils/message'
 import type { ISystemState } from './types/system'
+import usePageStore from './page'
 
 export const useSystemStore = defineStore('system', {
   state(): ISystemState {
@@ -31,6 +32,7 @@ export const useSystemStore = defineStore('system', {
         // 删除后请求最新数据
         this.postListAction(pageName, {})
         handleSuccess('删除成功')
+        usePageStore().getSetAction()
       } catch (error) {
         handleError('删除失败')
       }
@@ -40,6 +42,7 @@ export const useSystemStore = defineStore('system', {
         await createPageItem(pageName, itemData)
         this.postListAction(pageName, {})
         handleSuccess('创建成功')
+        usePageStore().getSetAction()
       } catch (error) {
         handleError('创建失败')
       }
@@ -51,6 +54,7 @@ export const useSystemStore = defineStore('system', {
         // 删除后请求最新数据
         this.postListAction(pageName, {})
         handleSuccess('修改成功')
+        usePageStore().getSetAction()
       } catch (error) {
         handleError('修改失败')
       }

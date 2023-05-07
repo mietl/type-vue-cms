@@ -3,9 +3,8 @@
     <div class="flex justify-between">
       <span>{{ tableConfig.title ?? '数据列表' }}</span>
       <el-button
+        class="new-item-btn"
         text
-        bg
-        round
         style="border: 1px solid #424242"
         @click="handleNewItem"
         v-if="isCreate"
@@ -81,26 +80,24 @@
       />
     </div>
     <TTModal v-if="modalConfig" ref="formModalRef" :pageName="pageName" :modal-config="modalConfig">
-      <template v-for="slotName in modalSlots" #[slotName]>
-        <slot :name="slotName"></slot>
+      <template v-for="slot in modalSlots" #[slot.slotName]>
+        <slot :name="slot.slotName"></slot>
       </template>
     </TTModal>
   </div>
 </template>
 
 <script setup lang="ts">
+import TTModal from '@/components/page-modal/TTMoal.vue'
+
 import { ref } from 'vue'
 
 import { storeToRefs } from 'pinia'
 import { useSystemStore } from '@/store/system'
 
-import TTModal from '@/components/page-modal/TTMoal.vue'
-
-import { formatUTC } from '@/utils/format_date'
-
 import type { ItableConfig, IModalConfig } from '@/types/table'
-
 import usePermissions from '@/hooks/usePermissions'
+import { formatUTC } from '@/utils/format_date'
 
 const systemStore = useSystemStore()
 
@@ -111,19 +108,17 @@ export interface ITTableProps {
 }
 
 const props = defineProps<ITTableProps>()
+const emit = defineEmits(['beforeEdit', 'beforeNew'])
 
 const isCreate = usePermissions(`${props.pageName}:create`)
 const isDelete = usePermissions(`${props.pageName}:delete`)
 const isUpdate = usePermissions(`${props.pageName}:update`)
 const isQuery = usePermissions(`${props.pageName}:query`)
 
-console.log(isQuery)
-
-const emit = defineEmits(['beforeEdit', 'beforeNew'])
-
-const modalSlots = props.modalConfig?.formItems
-  .filter((item) => item.type == 'custom' && item.slotName)
-  .map((item) => item.slotName)
+// 新建弹窗插槽
+const modalSlots = props.modalConfig?.formItems.filter(
+  (item) => item.type == 'custom' && item.slotName
+)
 
 const formModalRef = ref<InstanceType<typeof TTModal>>()
 // 新增数据
@@ -178,8 +173,6 @@ const handleCurrentChange = fetchPageList
 // 用户列表，数据总数
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
 
-console.log(pageTotalCount)
-
 defineExpose({
   fetchPageList
 })
@@ -189,6 +182,12 @@ defineExpose({
 .el-table {
   height: calc(100% - 32px - 56px);
 }
+.new-item-btn {
+  padding: 9px 15px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
 .utable :deep(.el-table__cell) {
   padding: 12px 0;
 }

@@ -5,6 +5,7 @@
     </div>
     <div class="search">
       <TSearch
+        :pageName="pageName"
         :search-config="searchConfig"
         @clearForm="resetData"
         @searchForm="searchData"
@@ -14,13 +15,13 @@
     <el-divider />
     <div class="main-content">
       <TTable
-        pageName="department"
+        :pageName="pageName"
         ref="tableRef"
         :table-config="tableConfig"
         :modal-config="modalConfig"
         style="height: 100%"
       >
-        <template #parentId="{ row, prop }: SlotProps">
+        <template #parentId="{ row, prop }">
           <span>{{ getDepartmentById(row[prop]) }}</span>
         </template>
       </TTable>
@@ -41,9 +42,7 @@ import modalConfig from './config/modal.config'
 
 import usePageStore from '@/store/page'
 
-interface SlotProps {
-  [key: string]: any
-}
+const pageName = 'department'
 
 const { entireDepartments } = storeToRefs(usePageStore())
 const getDepartmentById = (id: string | number) => {

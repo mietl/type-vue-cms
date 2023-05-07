@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { userLogin, getUserInfo, getUserRoleMenus } from '@/services/entry/login'
+import { userLogin, getUserInfo, getUserRoleMenus } from '@/service/entry/login'
 import type { IAccount } from '@/types'
 
 import router from '@/router'

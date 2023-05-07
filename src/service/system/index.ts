@@ -1,4 +1,4 @@
-import httpRequest from '../'
+import httpRequest from '..'
 
 // 根据条件查询数据
 export function postPageList(pageName: string, query: any) {
@@ -25,4 +25,3 @@ export function updatePageItem(pageName: string, id: number, updateItem: any) {
     data: updateItem
   })
 }
-

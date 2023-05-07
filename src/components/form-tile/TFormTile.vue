@@ -13,7 +13,7 @@
       </el-date-picker>
     </template>
     <template v-if="item.type === 'select'">
-      <el-select v-model="inputValue" style="width:100%">
+      <el-select v-model="inputValue" style="width: 100%">
         <el-option
           v-for="option in item.options"
           :key="option.value"
@@ -32,7 +32,6 @@
 import { computed } from 'vue'
 
 import type { ITileItem } from '@/types/form'
-// IFormItem
 interface IProps {
   item: ITileItem
   value: any

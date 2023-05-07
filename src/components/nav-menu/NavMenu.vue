@@ -6,10 +6,6 @@
         <div class="title" v-show="!isCollapse">内容管理</div>
       </div>
     </div>
-    <!-- :collapse="isCollapse"
-      @open="handleOpen"
-      @close="handleClose" -->
-    <!-- b7bdc3 -->
     <el-menu
       :collapse="isCollapse"
       :default-active="activeItem"
@@ -136,12 +132,7 @@ const changePage = (path: string) => {
 }
 
 .el-menu-item.is-active {
-  // color: #303133 !important;
   color: #eae9e0;
-  background: rgba(255, 255, 222, 0.4);
-  // color: #303133;
-  // color: #fff;
-  // color: #333333;
-  // background-color: #a4aec2 !important;
+  background: #7f8ec7;
 }
 </style>

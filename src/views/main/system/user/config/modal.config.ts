@@ -27,13 +27,13 @@ const modalConfig: IModalConfig = {
       type: 'input'
     },
     {
-      span:12,
+      span: 12,
       label: '选择角色',
       prop: 'roleId',
       type: 'select'
     },
     {
-      span:12,
+      span: 12,
       label: '选择部门',
       prop: 'departmentId',
       type: 'select'

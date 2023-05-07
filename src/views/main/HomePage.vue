@@ -36,7 +36,6 @@ const setCollapse = (flag: boolean) => {
   }
 
   .el-aside {
-    // background-color: #001529;
     background-color: #2f549c;
     color: #fff;
     text-align: left;

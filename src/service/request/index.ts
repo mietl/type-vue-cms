@@ -26,7 +26,7 @@ interface IRequestInterceptors {
 
 const SETUP_LOADING = true
 
-class httpRequest {
+class TRequest {
   instance: AxiosInstance
   showLoading?: boolean
   loading?: any
@@ -152,4 +152,4 @@ class httpRequest {
   }
 }
 
-export default httpRequest
+export default TRequest

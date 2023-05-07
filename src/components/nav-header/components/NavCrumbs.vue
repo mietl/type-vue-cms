@@ -15,6 +15,7 @@ import useLoginStore from '@/store/login'
 const currentRoute = useRoute()
 const userMenus = useLoginStore().userMenus
 
+// 显示当前页面面包屑
 const pathCrumbs = computed(() => {
   return trackMenuPath(currentRoute.path, userMenus)
 })

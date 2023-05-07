@@ -1,9 +1,9 @@
 import type { ITileItem } from '@/types/form'
-interface ISearchConfig  {
-  labelWidth?:string
-  formItems:ITileItem[]
+interface ISearchConfig {
+  labelWidth?: string
+  formItems: ITileItem[]
 }
-const searchConfig:ISearchConfig =  {
+const searchConfig: ISearchConfig = {
   formItems: [
     {
       type: 'input',
@@ -27,7 +27,7 @@ const searchConfig:ISearchConfig =  {
       type: 'switch',
       label: '状态',
       prop: 'enable',
-      value:1,
+      value: 1,
       activeValue: 1,
       inactiveValue: 0
     },
@@ -39,5 +39,4 @@ const searchConfig:ISearchConfig =  {
   ]
 }
 
-
-export default searchConfig;
+export default searchConfig

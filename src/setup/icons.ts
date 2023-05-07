@@ -7,5 +7,3 @@ export default function (app: App) {
     app.component(key, component)
   }
 }
-
-// export function

@@ -1,4 +1,4 @@
-import { getEntireDepartments, getEntireRoles, getEntireMenus } from '@/services/entry/pageset'
+import { getEntireDepartments, getEntireRoles, getEntireMenus } from '@/service/entry/pageset'
 import { defineStore } from 'pinia'
 
 interface IPageState {

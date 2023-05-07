@@ -5,6 +5,7 @@
     </div>
     <div class="search">
       <TSearch
+        :pageName="pageName"
         :search-config="searchConfig"
         @clearForm="resetData"
         @searchForm="searchData"
@@ -13,20 +14,23 @@
     <el-divider />
     <div class="main-content">
       <TTable
-        pageName="role"
+        :pageName="pageName"
         ref="tableRef"
-        @before-edit="beforeEditHandle"
-        @before-new="beforeNewHandle"
+        @before-edit="beforeEditHandler"
+        @before-new="beforeNewHandler"
         :table-config="tableConfig"
         :modal-config="modalConfig"
         style="height: 100%"
       >
         <template #menulist>
+          <!-- :model-value="checkTagKeys" -->
+
           <el-tree-select
+            v-model="checkTagKeys"
             ref="treeRef"
-            v-model="checkedTags"
             @check="checkMenuTree"
             style="width: 100%"
+            tag-type="danger"
             :data="entireMenus"
             node-key="id"
             :props="{
@@ -34,7 +38,8 @@
             }"
             multiple
             show-checkbox
-          />
+          >
+          </el-tree-select>
         </template>
       </TTable>
     </div>
@@ -42,22 +47,21 @@
 </template>
 
 <script setup lang="ts">
+import { provide, reactive, ref, nextTick, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+
 import searchConfig from './config/search.config'
 import tableConfig from './config/table.config'
 import modalConfig from './config/modal.config'
 
 import { useSearch } from '@/hooks/'
+import { menuMapKeys } from '@/utils/map_menu'
 
 import usePageStore from '@/store/page'
 
-import { provide, reactive, ref, nextTick } from 'vue'
+const pageName = 'role'
 
-import { storeToRefs } from 'pinia'
-
-import { menuMapKeys } from '@/utils/map_menu'
-
-// 输入框显示的菜单标签
-const checkedTags = ref()
+const { entireMenus } = storeToRefs(usePageStore())
 
 export interface IPayloadData {
   menuList: number[]
@@ -66,37 +70,62 @@ export interface IPayloadData {
 const payloadData = reactive<IPayloadData>({
   menuList: []
 })
+
 let checkMenuKeys = []
+// 输入框显示的菜单标签
+const checkTagKeys = ref()
+
+const mapMenuChildren = (menulist: any[]): number[] => {
+  let keys: number[] = []
+  menulist.map((item: any) => {
+    if (item.children) {
+      for (const submenu of item.children) {
+        keys.push(submenu.id)
+      }
+    }
+  })
+  return keys
+}
+const mapMenuChildrenKeys = mapMenuChildren(entireMenus.value)
+
 const checkMenuTree = (_: any, { checkedKeys, halfCheckedKeys }: any) => {
   checkMenuKeys = [...checkedKeys, ...halfCheckedKeys]
+
   payloadData.menuList = checkMenuKeys
+
+  // 等待v-model 更新完，做一次过滤  展示一级菜单与二级菜单标签
+  nextTick(() => {
+    checkTagKeys.value = mapMenuChildrenKeys.filter(
+      (id: number) => treeRef.value?.getNode(id).checked
+    )
+  })
 }
+
+// 这里啊
 
 provide('payloadData', payloadData)
 
 const treeRef = ref()
-const beforeEditHandle = (row: any) => {
-  console.log(row)
+
+const beforeEditHandler = (row: any) => {
   let checkTreeKeys = menuMapKeys(row.menuList)
-  let firstTreeKeys = row.menuList.map((item: any) => item.id)
+
+  let firstLevelCheckedKeys = mapMenuChildren(row.menuList)
 
   nextTick(() => {
     treeRef.value?.setCheckedKeys(checkTreeKeys)
-    checkedTags.value = firstTreeKeys
-    // checkedTags.value = treeRef.value?.getCheckedKeys()
+    checkTagKeys.value = firstLevelCheckedKeys // getCheckedKeys()
   })
 }
 
-const beforeNewHandle = () => {
+const beforeNewHandler = () => {
   nextTick(() => {
-    checkedTags.value = []
+    checkTagKeys.value = []
     treeRef.value?.setCheckedKeys([])
   })
 }
 
 const { tableRef, resetData, searchData } = useSearch()
-
-const { entireMenus } = storeToRefs(usePageStore())
 </script>
 
 <style scoped>
