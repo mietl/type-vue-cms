@@ -3,13 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, onBeforeMount } from 'vue'
+import { ref, onMounted, reactive, onBeforeMount, watch } from 'vue'
 
 interface IProps {
   value: string
   width?: number
   height?: number
-  isDefault: boolean
+  isDefault?: boolean
   isFocus?: boolean
 }
 export interface EditorInfo {
@@ -19,12 +19,14 @@ export interface EditorInfo {
 
 const props = withDefaults(defineProps<IProps>(), {
   isFocus: true,
-  height: 400,
+  height: 300,
   isDefault: true
 })
 
 import WangEditor from 'wangeditor'
 import type Editor from 'wangeditor'
+
+const isInitDefault = ref(false)
 
 const editorRef = ref(null)
 
@@ -37,13 +39,13 @@ const instance = ref<Editor | null>(null)
 
 const emit = defineEmits(['update:value'])
 
-const setDefaultContent = (editor: Editor, htmlStr: string) => {
+const setEditorText = (editor: Editor, htmlStr: string) => {
   if (!editor) return
-  if (!htmlStr) return
-
-  if (props.isDefault) {
-    editor.txt.html(htmlStr)
-  }
+  // if (!htmlStr) return
+  // isInitDefault.value = true
+  // if (props.isDefault) {}
+  // console.log(htmlStr, '着')
+  editor.txt.html(htmlStr)
 }
 
 const setEditorConfig = (editor: Editor) => {
@@ -54,7 +56,10 @@ const setEditorConfig = (editor: Editor) => {
     content.html = newHtml
     content.text = editor.txt.text()
 
+    // if (!isInitDefault.value) {
     emit('update:value', content.html)
+    // }
+    // isInitDefault.value = false
   }
 }
 
@@ -62,11 +67,17 @@ const createWangEditor = () => {
   instance.value = new WangEditor(editorRef.value)
 
   const editor: Editor = instance.value as Editor
+
+  watch(
+    () => props.value,
+    () => {
+      setEditorText(editor, props.value)
+    }
+  )
   setEditorConfig(editor)
   instance.value.create()
-
-  setDefaultContent(editor, props.value)
 }
+
 onMounted(() => {
   createWangEditor()
 })
@@ -80,6 +91,6 @@ onBeforeMount(() => {
 
 <style scoped>
 .t-editor {
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 </style>

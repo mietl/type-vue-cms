@@ -37,7 +37,7 @@ const pieOptions = computed<EChartsOption>(() => {
         avoidLabelOverlap: false,
         label: {
           show: false,
-          position: 'center'
+          position: 'center',
         },
         emphasis: {
           label: {

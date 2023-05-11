@@ -3,7 +3,7 @@
     <div class="header">
       <span class="title">{{ title }}</span>
       <el-tooltip :content="tips" placement="top" effect="light">
-        <ep-info-filled></ep-info-filled>
+        <el-icon><ep-help /></el-icon>
       </el-tooltip>
     </div>
     <div class="content">
@@ -58,6 +58,7 @@ const counterOption = {
     justify-content: space-between;
     height: 38px;
     font-size: 14px;
+    color: #303133;
     // color: rgba(0, 0, 0,0.45);
   }
 
@@ -65,7 +66,7 @@ const counterOption = {
     flex: 1;
     font-size: 26px;
     margin-left: 0;
-    color: rgba(0, 0, 0, 0.485);
+    color: #999;
     display: flex;
     align-items: center;
   }

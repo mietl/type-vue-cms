@@ -13,7 +13,7 @@
     </div>
 
     <el-divider />
-    <div class="main-content">
+    <div class="scaffold">
       <TTable
         :pageName="pageName"
         ref="tableRef"

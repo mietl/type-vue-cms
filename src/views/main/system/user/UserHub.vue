@@ -7,12 +7,12 @@
       <TSearch
         :searchConfig="searchConfig"
         @clearForm="resetData"
-        @search-form="searchData"
+        @searchForm="searchData"
         pageName="users"
       ></TSearch>
     </div>
     <el-divider />
-    <div class="main-content">
+    <div class="scaffold">
       <TTable
         @before-edit="beforeEditItem"
         :modal-config="modalConfig"
@@ -81,7 +81,7 @@ const { tableRef, resetData, searchData } = useSearch()
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-  .main-content {
+  .scaffold {
     overflow: hidden;
     flex: 1;
   }

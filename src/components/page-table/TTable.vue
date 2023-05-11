@@ -1,7 +1,7 @@
 <template>
   <div class="utable">
     <div class="flex justify-between">
-      <span>{{ tableConfig.title ?? '数据列表' }}</span>
+      <span v-if="tableConfig.title">{{ tableConfig.title ?? '数据列表' }}</span>
       <el-button
         class="new-item-btn"
         text
@@ -15,7 +15,9 @@
     </div>
     <el-table
       :data="isQuery ? pageList : []"
-      style="width: 100%"
+      :style="{
+        height: tableHeight
+      }"
       :rowKey="tableConfig.childrenProps?.rowKey"
     >
       <template v-for="column in tableConfig.columnProps" :key="column.prop">
@@ -80,8 +82,8 @@
       />
     </div>
     <TTModal v-if="modalConfig" ref="formModalRef" :pageName="pageName" :modal-config="modalConfig">
-      <template v-for="slot in modalSlots" #[slot.slotName]>
-        <slot :name="slot.slotName"></slot>
+      <template v-for="item in modalSlots" #[item.slotName]>
+        <slot :name="item.slotName" v-bind="item"></slot>
       </template>
     </TTModal>
   </div>
@@ -90,7 +92,7 @@
 <script setup lang="ts">
 import TTModal from '@/components/page-modal/TTMoal.vue'
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import { storeToRefs } from 'pinia'
 import { useSystemStore } from '@/store/system'
@@ -173,17 +175,26 @@ const handleCurrentChange = fetchPageList
 // 用户列表，数据总数
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
 
+const tableHeight = computed(() => {
+  let leading = isQuery && props.tableConfig.title ? '32px' : '0px'
+  return `calc(100% - ${leading} - 56px)`
+})
+
 defineExpose({
   fetchPageList
 })
 </script>
 
 <style scoped lang="less">
+.utable {
+  height: 100%;
+}
 .el-table {
-  height: calc(100% - 32px - 56px);
+  width: 100%
+  // height: calc(100% -32px - 56px);
 }
 .new-item-btn {
-  padding: 9px 15px;
+  padding: 8px 12px;
   font-size: 13px;
   border-radius: 5px;
 }

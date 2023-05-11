@@ -1,9 +1,4 @@
-import type { ITileItem } from '@/types/form'
-
-export interface ISearchConfig {
-  labelWidth: string
-  formItems: ITileItem[]
-}
+import type { ISearchConfig } from '@/types/form'
 
 const searchConfig: ISearchConfig = {
   labelWidth: '80',

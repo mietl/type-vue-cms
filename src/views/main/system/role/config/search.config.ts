@@ -1,4 +1,5 @@
-export default {
+import type { ISearchConfig } from '@/types/form'
+const searchConfig: ISearchConfig = {
   labelWidth: '80',
   formItems: [
     {
@@ -20,3 +21,5 @@ export default {
     }
   ]
 }
+
+export default searchConfig

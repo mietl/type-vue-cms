@@ -6,7 +6,7 @@
     </div>
 
     <div class="nav-tools">
-      <nav-crumbs></nav-crumbs>
+      <nav-crumbs class="hidden-sm-only"></nav-crumbs>
       <user-nav-toolbar></user-nav-toolbar>
     </div>
   </div>
@@ -17,11 +17,14 @@ import UserNavToolbar from './components/UserNavToolbar.vue'
 import NavCrumbs from './components/NavCrumbs.vue'
 
 import { ref } from 'vue'
+import { localCache } from '@/utils/storage'
 
-let isCollapseState = ref(false)
+let isCollapseState = ref(localCache.get('isCollapse') || false)
+
 const emits = defineEmits(['changeCollapse'])
 const handleCollapse = () => {
   isCollapseState.value = !isCollapseState.value
+  localCache.set('isCollapse', isCollapseState.value)
   emits('changeCollapse', isCollapseState.value)
 }
 </script>

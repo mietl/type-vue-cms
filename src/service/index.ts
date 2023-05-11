@@ -2,8 +2,8 @@ import { LOGIN_TOKEN } from '@/config/constant'
 import { BASE_URL, TIME_OUT } from '@/config/env'
 import { localCache } from '@/utils/storage'
 
-import httpRequest from './request'
-export default new httpRequest({
+import TRequest from './request'
+export default new TRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {

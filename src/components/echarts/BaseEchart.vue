@@ -1,5 +1,5 @@
 <template>
-  <div class="echart" ref="echartRef"></div>
+  <div class="echart" ref="echartRef" :style="{ width: width, height: height }"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,9 +12,14 @@ const echartRef = ref<HTMLElement>()
 
 interface IProps {
   options: EChartsOption
+  width?: string
+  height?: string
 }
 
-const props = defineProps<IProps>()
+const props = withDefaults(defineProps<IProps>(), {
+  width: '100%',
+  height: '350px'
+})
 
 onMounted(() => {
   const echartInstance = echarts.init(echartRef.value!, 'light', {
@@ -36,7 +41,7 @@ echarts.init
 </script>
 
 <style scoped>
-.echart {
+/* .echart {
   height: 300px;
-}
+} */
 </style>

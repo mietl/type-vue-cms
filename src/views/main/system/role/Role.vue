@@ -12,7 +12,7 @@
       ></TSearch>
     </div>
     <el-divider />
-    <div class="main-content">
+    <div class="scaffold">
       <TTable
         :pageName="pageName"
         ref="tableRef"
@@ -24,7 +24,6 @@
       >
         <template #menulist>
           <!-- :model-value="checkTagKeys" -->
-
           <el-tree-select
             v-model="checkTagKeys"
             ref="treeRef"
@@ -47,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, reactive, ref, nextTick, watch } from 'vue'
+import { provide, reactive, ref, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import searchConfig from './config/search.config'
@@ -93,15 +92,13 @@ const checkMenuTree = (_: any, { checkedKeys, halfCheckedKeys }: any) => {
 
   payloadData.menuList = checkMenuKeys
 
-  // 等待v-model 更新完，做一次过滤  展示一级菜单与二级菜单标签
+  // 等待v-model 更新完，做一次过滤  只展示一级菜单与二级菜单标签
   nextTick(() => {
     checkTagKeys.value = mapMenuChildrenKeys.filter(
       (id: number) => treeRef.value?.getNode(id).checked
     )
   })
 }
-
-// 这里啊
 
 provide('payloadData', payloadData)
 
@@ -128,6 +125,6 @@ const beforeNewHandler = () => {
 const { tableRef, resetData, searchData } = useSearch()
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 @import '@/assets/css/layout.less';
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <div class="main-content">
+    <div class="scaffold">
       <TTable pageName="menu" :table-config="tableConfig" style="height: 100%"> </TTable>
     </div>
   </div>
