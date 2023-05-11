@@ -31,8 +31,6 @@ const post = () => {
   storyStore.postArticleAction(title.value, htmlStr.value)
   htmlStr.value = ''
   title.value = ''
-
-  console.log(htmlStr, 'the')
 }
 </script>
 

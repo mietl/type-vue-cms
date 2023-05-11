@@ -1,5 +1,3 @@
-
-
 export const geoCoordMap: any = {
   海门: [121.15, 31.89],
 
@@ -381,4 +379,3 @@ export const geoCoordMap: any = {
 
   大庆: [125.03, 46.58]
 }
-

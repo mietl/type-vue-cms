@@ -51,7 +51,6 @@ import ticon from '@/assets/img/t.png'
 
 const logout = () => {
   localCache.remove(LOGIN_TOKEN)
-  console.log();
   router.push('/login')
 }
 </script>

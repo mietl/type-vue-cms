@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<IProps>(), {
 import WangEditor from 'wangeditor'
 import type Editor from 'wangeditor'
 
-const isInitDefault = ref(false)
+// const isInitDefault = ref(false)
 
 const editorRef = ref(null)
 
@@ -44,7 +44,6 @@ const setEditorText = (editor: Editor, htmlStr: string) => {
   // if (!htmlStr) return
   // isInitDefault.value = true
   // if (props.isDefault) {}
-  // console.log(htmlStr, '着')
   editor.txt.html(htmlStr)
 }
 

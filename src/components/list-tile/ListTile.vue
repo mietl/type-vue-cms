@@ -14,7 +14,6 @@ defineProps<{ data: any[] }>()
 </script>
 
 <style lang="less" scoped>
-
 .t-list {
   padding: 0 15px;
   margin-bottom: 40px;
