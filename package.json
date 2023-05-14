@@ -29,12 +29,13 @@
     "wangeditor": "^4.7.15"
   },
   "devDependencies": {
-    "@iconify-json/ep": "^1.1.10",
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@element-plus/icons-vue": "^2.1.0",
+    "@iconify-json/ant-design": "^1.1.5",
+    "@iconify-json/ep": "^1.1.10",
+    "@iconify-json/line-md": "^1.1.24",
     "@iconify/iconify": "^3.1.0",
-    "@iconify/json": "^2.2.42",
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/node": "^18.14.2",
     "@vitejs/plugin-vue": "^4.0.0",
