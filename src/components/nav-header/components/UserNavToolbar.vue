@@ -9,7 +9,7 @@
         <ant-design:github-filled></ant-design:github-filled>
       </span>
       <span>
-        <img :src="ticon" width="24" />
+        <img src="@/assets/img/t.png" width="24" />
       </span>
       <!-- <span style="font-size: 23px"> &#x1F36C; </span> -->
     </div>
@@ -46,8 +46,6 @@
 import { LOGIN_TOKEN } from '@/config/constant'
 import router from '@/router'
 import { localCache } from '@/utils/storage'
-
-import ticon from '@/assets/img/t.png'
 
 const logout = () => {
   localCache.remove(LOGIN_TOKEN)

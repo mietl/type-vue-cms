@@ -2,15 +2,13 @@
   <div class="not-found">
     <h1>404</h1>
     <h2>Page Not Found</h2>
-    <img :src="interest" alt="Not Found" />
+    <img src="@/assets/img/1f535.png" alt="Not Found" />
     <p>抱歉，您要查找的页面不存在。</p>
     <router-link to="/" class="router-link">返回首页</router-link>
   </div>
 </template>
 
-<script setup lang="ts">
-import interest from '@/assets/img/1f535.png'
-</script>
+<script setup lang="ts"></script>
 
 <style scoped>
 .not-found {

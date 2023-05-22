@@ -73,6 +73,8 @@ declare module '@vue/runtime-core' {
     NavCrumbs: typeof import('./src/components/nav-header/components/NavCrumbs.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/NavHeader.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/NavMenu.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     TCard: typeof import('./src/components/card/TCard.vue')['default']
     TCode: typeof import('./src/components/code/TCode.vue')['default']
     TCountUp: typeof import('./src/components/count-up/TCountUp.vue')['default']
