@@ -3,7 +3,7 @@
     <template v-for="(item, index) in data" :key="index">
       <div class="item">
         <span class="title">{{ item.title }}:</span>
-        <el-link type="primay">{{ item.desp }}</el-link>
+        <el-link>{{ item.desp }}</el-link>
       </div>
     </template>
   </div>

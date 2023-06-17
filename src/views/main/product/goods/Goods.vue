@@ -20,12 +20,15 @@
         :modal-config="modelConfig"
       >
         <template #imageSlot="{ row }">
-          <el-image
-            style="width: 50px; height: 50px"
-            :src="row.imgUrl"
-            :preview-src-list="[row.imgUrl]"
-          >
-          </el-image>
+          <div class="image-wrapper">
+              <el-image
+              :src="row.imgUrl"
+              :zoom-rate="1.2"
+              :preview-src-list="[row.imgUrl]"
+              fit="contain"
+              :preview-teleported="true"
+            />
+          </div>
         </template>
       </TTable>
     </div>
@@ -41,7 +44,7 @@ import modelConfig from './config/model.config'
 
 import { useSearch } from '@/hooks'
 
-const pageName = 'product'
+const pageName = 'goods'
 
 const { tableRef, searchData, resetData } = useSearch()
 </script>

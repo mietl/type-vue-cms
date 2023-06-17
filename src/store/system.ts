@@ -21,8 +21,9 @@ export const useSystemStore = defineStore('system', {
       if (pageListResult.code == 0) {
         const { totalCount, list } = pageListResult.data
 
+        console.log(pageListResult);
         this.pageList = list
-        this.pageTotalCount = totalCount
+        this.pageTotalCount = totalCount || list.length;
       }
     },
     async deleteItemAction(pageName: string, id: number) {

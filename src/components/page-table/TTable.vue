@@ -1,7 +1,9 @@
 <template>
   <div class="utable">
     <div class="flex justify-between">
-      <span v-if="tableConfig.title">{{ tableConfig.title ?? '数据列表' }}</span>
+      <div>
+        <span v-if="tableConfig.title && isQuery">{{ tableConfig.title ?? '数据列表' }} </span>
+      </div>
       <el-button
         class="new-item-btn"
         text
@@ -26,7 +28,7 @@
             <slot :name="column.slotName" v-bind="scope" :prop="column.prop"></slot>
           </template>
         </el-table-column>
-        <el-table-column v-else-if="column.type === 'timeAt'" v-bind="column">
+        <el-table-column v-else-if="column.type === 'timeAt'" v-bind="column" show-overflow-tooltip>
           <template #default="{ row }">
             {{ formatUTC(row[column.prop]) }}
           </template>
@@ -66,7 +68,7 @@
             </el-popconfirm>
           </template>
         </el-table-column>
-        <el-table-column v-else v-bind="column" />
+        <el-table-column v-else v-bind="column" show-overflow-tooltip />
       </template>
     </el-table>
     <div class="pagination-block flex justify-end">
@@ -116,6 +118,7 @@ const isCreate = usePermissions(`${props.pageName}:create`)
 const isDelete = usePermissions(`${props.pageName}:delete`)
 const isUpdate = usePermissions(`${props.pageName}:update`)
 const isQuery = usePermissions(`${props.pageName}:query`)
+
 
 // 新建弹窗插槽
 const modalSlots = props.modalConfig?.formItems.filter(
@@ -175,8 +178,9 @@ const handleCurrentChange = fetchPageList
 // 用户列表，数据总数
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
 
+
 const tableHeight = computed(() => {
-  let leading = isQuery && props.tableConfig.title ? '32px' : '0px'
+  let leading = isQuery || props.tableConfig.title ? '32px' : '0px'
   return `calc(100% - ${leading} - 56px)`
 })
 

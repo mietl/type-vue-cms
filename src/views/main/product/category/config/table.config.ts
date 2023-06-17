@@ -1,7 +1,7 @@
 import type { ItableConfig } from '@/types/table'
 
 const tableConfig: ItableConfig = {
-  title: '',
+  title: false,
   columnProps: [
     {
       type: 'index',
@@ -11,7 +11,7 @@ const tableConfig: ItableConfig = {
     {
       label: '类别名称',
       prop: 'name',
-      width: 120
+      width: 200
     },
     {
       type: 'timeAt',

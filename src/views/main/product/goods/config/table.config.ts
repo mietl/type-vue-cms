@@ -1,7 +1,7 @@
 import type { ItableConfig } from '@/types/table'
 
 const tableConfig: ItableConfig = {
-  title: '',
+  title: false,
   newItemText: '新建商品',
   columnProps: [
     {
@@ -12,13 +12,13 @@ const tableConfig: ItableConfig = {
     {
       label: '商品名称',
       prop: 'name',
-      width: 120
+      width: 200
     },
     { prop: 'oldPrice', label: '原价格', minWidth: '100' },
     { prop: 'newPrice', label: '新价格', minWidth: '100' },
     { prop: 'desc', label: '商品描述', minWidth: '100' },
     { prop: 'status', label: '状态', minWidth: '100' },
-    { prop: 'imgUrl', label: '图片', minWidth: '100', slotName: 'imageSlot' },
+    { prop: 'imgUrl', label: '图片', minWidth: '100', slotName: 'imageSlot',type:'custom' },
     { prop: 'inventoryCount', label: '库存', minWidth: '80' },
     { prop: 'saleCount', label: '销量', minWidth: '80' },
     { prop: 'favorCount', label: '收藏', minWidth: '80' },

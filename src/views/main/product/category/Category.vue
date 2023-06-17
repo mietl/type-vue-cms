@@ -5,7 +5,7 @@
     </div>
     <el-divider />
     <div class="scaffold">
-      <TTable pageName="product" :table-config="tableConfig"></TTable>
+      <TTable pageName="goods" :table-config="tableConfig"></TTable>
     </div>
   </div>
 </template>

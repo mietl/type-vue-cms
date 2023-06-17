@@ -1,6 +1,6 @@
 import type { ITileItem } from './form'
 export interface ItableConfig {
-  title?: string
+  title?: string | boolean
   newItemText?: string
   columnProps: ItableConfigTile[]
   childrenProps?: {
