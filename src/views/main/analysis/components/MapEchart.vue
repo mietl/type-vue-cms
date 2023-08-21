@@ -8,13 +8,12 @@
 import { computed } from 'vue'
 import type { EChartsOption } from 'echarts'
 import * as echarts from 'echarts'
-
+import BaseEchart from '@/components/echarts/BaseEchart.vue'
 import { mapGeoCoordValue } from './utils'
 
 import chinaMap from './data/china.json'
-echarts.registerMap('china', chinaMap as any)
 
-import BaseEchart from '@/components/echarts/BaseEchart.vue'
+echarts.registerMap('china', chinaMap as any)
 
 interface IProps {
   mapData: []

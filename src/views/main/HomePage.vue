@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { localCache } from '@/utils/storage.ts'
+import { localCache } from '@/utils/storage'
 import NavHeader from '@/components/nav-header/NavHeader.vue'
 
 const isCollapse = ref(localCache.get('isCollapse') || false)

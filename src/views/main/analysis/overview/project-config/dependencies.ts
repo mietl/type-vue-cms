@@ -1,4 +1,4 @@
-import type { DescriptionProp } from '@/components/property-list'
+import type { DescriptionProp } from '@/components/description'
 export const dependencies: DescriptionProp[] = [
   { name: 'axios', description: '^1.3.4' },
   { name: 'countup.js', description: '^2.6.2' },

@@ -44,11 +44,11 @@ import type { IModalConfig } from '@/types/table'
 
 import { useSystemStore } from '@/store/system'
 
+import { inject } from 'vue'
+
 const systemStore = useSystemStore()
 
 const dialogVisible = ref(false)
-
-import { inject } from 'vue'
 
 const payloadData: any = inject('payloadData')
 

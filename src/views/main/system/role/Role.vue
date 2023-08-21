@@ -62,7 +62,7 @@ const pageName = 'role'
 
 const { entireMenus } = storeToRefs(usePageStore())
 
-export interface IPayloadData {
+interface IPayloadData {
   menuList: number[]
 }
 

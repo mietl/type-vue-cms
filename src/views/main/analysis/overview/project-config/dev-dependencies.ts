@@ -1,4 +1,4 @@
-import type { DescriptionProp } from '@/components/property-list'
+import type { DescriptionProp } from '@/components/description'
 export const devDesciptions: DescriptionProp[] = [
   {
     name: '@types/node',

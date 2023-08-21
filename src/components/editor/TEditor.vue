@@ -5,6 +5,9 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, onBeforeMount, watch } from 'vue'
 
+import WangEditor from 'wangeditor'
+import type Editor from 'wangeditor'
+
 interface IProps {
   value: string
   width?: number
@@ -12,7 +15,7 @@ interface IProps {
   isDefault?: boolean
   isFocus?: boolean
 }
-export interface EditorInfo {
+interface EditorInfo {
   html: string
   text: string
 }
@@ -22,9 +25,6 @@ const props = withDefaults(defineProps<IProps>(), {
   height: 300,
   isDefault: true
 })
-
-import WangEditor from 'wangeditor'
-import type Editor from 'wangeditor'
 
 // const isInitDefault = ref(false)
 

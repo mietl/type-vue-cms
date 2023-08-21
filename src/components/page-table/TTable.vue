@@ -105,7 +105,7 @@ import { formatUTC } from '@/utils/format_date'
 
 const systemStore = useSystemStore()
 
-export interface ITTableProps {
+interface ITTableProps {
   pageName: string
   tableConfig: ItableConfig
   modalConfig?: IModalConfig
@@ -118,7 +118,6 @@ const isCreate = usePermissions(`${props.pageName}:create`)
 const isDelete = usePermissions(`${props.pageName}:delete`)
 const isUpdate = usePermissions(`${props.pageName}:update`)
 const isQuery = usePermissions(`${props.pageName}:query`)
-
 
 // 新建弹窗插槽
 const modalSlots = props.modalConfig?.formItems.filter(
@@ -177,7 +176,6 @@ const handleCurrentChange = fetchPageList
 
 // 用户列表，数据总数
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
-
 
 const tableHeight = computed(() => {
   let leading = isQuery || props.tableConfig.title ? '32px' : '0px'

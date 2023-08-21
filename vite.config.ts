@@ -2,6 +2,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 import AutoImport from 'unplugin-auto-import/vite'
 
+import viteCompression from 'vite-plugin-compression'
+
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 
@@ -54,6 +56,13 @@ export default defineConfig({
     }),
     Icons({
       autoInstall: true
+    }),
+    viteCompression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+      ext: '.gz'
     })
   ],
 
@@ -61,5 +70,9 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+
+  build: {
+    chunkSizeWarningLimit: 1200
   }
 })
