@@ -73,7 +73,7 @@ class TRequest {
       (err) => {
         this.loading?.close()
         $swalToast.fire({
-          text: '请求失败，这似乎不是我们的错。请检查您的网络连接或稍后再试。',
+          text: '请求失败，请检查您的网络连接或稍后再试。',
           icon: 'error'
         })
         // console.log('全局响应失败拦截')
